@@ -272,7 +272,7 @@ export function Hero() {
                     </p>
                     <p
                       className="mt-0.5 text-[11px] leading-none"
-                      style={{ color: "var(--color-foreground-secondary)" }}
+                      style={{ color: "white" }}
                     >
                       AI/ML · Automation · Full-stack
                     </p>

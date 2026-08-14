@@ -159,14 +159,16 @@ export function Navbar() {
                 color: "var(--color-accent-text)",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "var(--color-accent-dark)";
+                e.currentTarget.style.backgroundColor = "var(--color-accent)";
+                e.currentTarget.style.color = "var(--color-accent-text)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "var(--color-accent)";
+                e.currentTarget.style.backgroundColor = "var(--color-foreground)";
+                e.currentTarget.style.color = "var(--color-background)";
               }}
             >
               <Mail className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Hire me</span>
+              <span className="hidden sm:inline">Connect</span>
             </a>
           </MagneticButton>
         </div>
