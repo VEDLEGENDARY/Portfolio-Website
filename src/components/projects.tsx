@@ -155,7 +155,7 @@ function ProjectCard({ project }: { project: Project }) {
                   href={project.link}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold transition-colors duration-200"
+                  className="resume-btn inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold"
                   style={{ color: "var(--color-foreground)" }}
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.color = "var(--color-accent)")
@@ -174,7 +174,7 @@ function ProjectCard({ project }: { project: Project }) {
                   href={project.extraLink}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold transition-colors duration-200"
+                  className="resume-btn inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold"
                   style={{ color: "var(--color-foreground)" }}
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.color = "var(--color-accent)")
@@ -327,19 +327,7 @@ export function Projects() {
                     href="https://github.com/nshah2006/NexDrop/"
                     target="_blank"
                     rel="noreferrer"
-                    className="group/btn inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold transition-colors duration-200"
-                    style={{
-                      backgroundColor: "var(--color-foreground)",
-                      color: "var(--color-background)",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = "#b9ff66";
-                      e.currentTarget.style.color = "#080808";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = "var(--color-foreground)";
-                      e.currentTarget.style.color = "var(--color-background)";
-                    }}
+                    className="resume-btn group/btn inline-flex items-center gap-2 px-6 py-3 text-sm font-bold"
                   >
                     View source
                     <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />

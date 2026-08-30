@@ -33,10 +33,11 @@ export function Navbar() {
     <header
       className="fixed left-0 right-0 top-0 z-50 transition-all duration-300"
       style={{
-        /* Keep the navbar transparent so only the content behind it is softened. */
-        backgroundColor: "transparent",
-        backdropFilter: "blur(20px) saturate(180%)",
-        WebkitBackdropFilter: "blur(20px) saturate(180%)",
+        /* Preserve the themed highlight while enabling glass only after scrolling. */
+        backgroundColor:
+          theme === "dark" ? "rgba(8, 8, 8, 0.8)" : "rgba(255, 255, 255, 0.8)",
+        backdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
         borderBottom: scrolled
           ? "1px solid rgba(255, 255, 255, 0.08)"
           : "1px solid transparent",
@@ -150,7 +151,7 @@ export function Navbar() {
             <a
               data-cursor-grow
               href="mailto:ved.sp@outlook.com"
-              className="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-bold transition-colors duration-200"
+              className="resume-btn inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold"
               style={{
                 backgroundColor: "var(--color-accent)",
                 color: "var(--color-accent-text)",

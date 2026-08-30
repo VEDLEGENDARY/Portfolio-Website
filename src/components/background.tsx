@@ -146,7 +146,7 @@ export function Background() {
             href="/VedP_Resume.pdf"
             target="_blank"
             rel="noreferrer"
-            className="resume-btn inline-flex items-center gap-1.5 rounded-full px-6 py-4 text-s font-semibold transition-all duration-200"
+            className="resume-btn inline-flex items-center gap-1.5 px-6 py-4 text-sm font-semibold"
           >
             Full resume
             <ArrowUpRight className="h-3.5 w-3.5" />

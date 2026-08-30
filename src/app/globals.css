@@ -146,7 +146,7 @@ html[data-theme="light"] {
   transition: transform 0.3s ease;
 }
 .resume-btn:hover svg {
-  transform: translateY(2px);
+  transform: translate(2px, -2px) scale(1.1);
 }
 
 /* ── Keyword highlight: accent text + sparse dotted underline ── */

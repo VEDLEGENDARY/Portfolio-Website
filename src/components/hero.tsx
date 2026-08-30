@@ -180,19 +180,7 @@ export function Hero() {
                 <a
                   data-cursor-grow
                   href="#projects"
-                  className="group inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold transition-colors duration-200"
-                  style={{
-                    backgroundColor: "var(--color-foreground)",
-                    color: "var(--color-background)",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = "var(--color-accent)";
-                    e.currentTarget.style.color = "var(--color-accent-text)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = "var(--color-foreground)";
-                    e.currentTarget.style.color = "var(--color-background)";
-                  }}
+                  className="resume-btn group inline-flex items-center gap-2 px-6 py-3 text-sm font-bold"
                 >
                   See my work
                   <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -284,32 +272,16 @@ export function Hero() {
         </div>
       </div>
 
-      {/* ── Scroll indicator ── */}
-      <motion.div
-        className="pointer-events-none absolute bottom-20 left-1/2 z-10 -translate-x-1/2 hidden sm:flex flex-col items-center gap-1.5"
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.4, duration: 0.8, ease }}
+      {/* Static directional cue */}
+      <ArrowUpRight
         aria-hidden
-      >
-        <span
-          className="text-[10px] font-semibold uppercase tracking-[0.3em]"
-          style={{ color: "var(--color-subtle)" }}
-        >
-          Scroll
-        </span>
-        <motion.div
-          animate={{ y: [0, 5, 0] }}
-          transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
-          className="h-5 w-px"
-          style={{ backgroundColor: "var(--color-subtle)" }}
-        />
-      </motion.div>
+        className="pointer-events-none absolute bottom-20 left-1/2 z-10 hidden size-5 -translate-x-1/2 sm:block"
+        style={{ color: "var(--color-subtle)" }}
+      />
 
       {/* ── Tech marquee footer ── */}
       <motion.div
-        className="vp-marquee relative z-10 shrink-0 overflow-hidden border-t py-4"
-        style={{ borderColor: "var(--color-border)" }}
+        className="vp-marquee relative z-10 shrink-0 overflow-hidden py-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 0.8 }}
