@@ -33,16 +33,15 @@ export function Navbar() {
     <header
       className="fixed left-0 right-0 top-0 z-50 transition-all duration-300"
       style={{
-        /* AT TOP: Transparent background & 0px blur (Grainy noise & grid stay crisp) */
-        /* WHEN SCROLLED: Dark translucent background + strong blur for passing text */
+        /* Preserve the themed highlight while enabling glass only after scrolling. */
         backgroundColor: scrolled
-          ? "rgba(8, 8, 8, 0.72)"
-          : "rgba(8, 8, 8, 0)",
+          ? theme === "dark"
+            ? "rgba(8, 8, 8, 0.8)"
+            : "rgba(255, 255, 255, 0.4)"
+          : "transparent",
         backdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
         WebkitBackdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
-        borderBottom: scrolled
-          ? "1px solid rgba(255, 255, 255, 0.08)"
-          : "1px solid transparent",
+        borderBottom: "none",
       }}
     >
       <nav
@@ -82,7 +81,7 @@ export function Navbar() {
                 href={link.href}
                 data-cursor-grow
                 className="group relative text-[15px] font-medium transition-colors duration-200"
-                style={{ color: "var(--color-muted)" }}
+                style={{ color: "color-mix(in srgb, var(--color-foreground) 80%, transparent)" }}
                 onMouseEnter={(e) =>
                   (e.currentTarget.style.color = "var(--color-foreground)")
                 }
@@ -153,7 +152,7 @@ export function Navbar() {
             <a
               data-cursor-grow
               href="mailto:ved.sp@outlook.com"
-              className="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-bold transition-colors duration-200"
+              className="resume-btn connect-btn inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold"
               style={{
                 backgroundColor: "var(--color-accent)",
                 color: "var(--color-accent-text)",
@@ -167,8 +166,8 @@ export function Navbar() {
                 e.currentTarget.style.color = "var(--color-background)";
               }}
             >
-              <Mail className="h-3.5 w-3.5" />
               <span className="hidden sm:inline">Connect</span>
+              <Mail className="h-3.5 w-3.5" />
             </a>
           </MagneticButton>
         </div>

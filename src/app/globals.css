@@ -122,7 +122,7 @@ html[data-theme="light"] {
   isolation: isolate;
   overflow: hidden;
   border-radius: 9999px;
-  border: 1px solid var(--color-border);
+  border: 2px solid color-mix(in srgb, var(--color-foreground) 80%, transparent);
   color: var(--color-foreground);
   transition: color 0.3s ease, border-color 0.3s ease;
 }
@@ -137,7 +137,7 @@ html[data-theme="light"] {
 }
 .resume-btn:hover {
   color: var(--color-accent-text);
-  border-color: var(--color-accent);
+  border-color: var(--color-accent-text);
 }
 .resume-btn:hover::before {
   transform: translateY(0);
@@ -146,7 +146,11 @@ html[data-theme="light"] {
   transition: transform 0.3s ease;
 }
 .resume-btn:hover svg {
-  transform: translateY(2px);
+  transform: translate(2px, -2px) scale(1.1);
+}
+
+.connect-btn:hover svg {
+  transform: none;
 }
 
 /* ── Keyword highlight: accent text + sparse dotted underline ── */
@@ -286,22 +290,9 @@ html.is-loading body {
   }
 }
 
-/* ── Shine sweep across large headings ── */
+/* ── Static section headings ── */
 .shine-text {
-  background: linear-gradient(
-    100deg,
-    var(--color-foreground) 0%,
-    var(--color-foreground) 40%,
-    var(--color-accent) 50%,
-    var(--color-foreground) 60%,
-    var(--color-foreground) 100%
-  );
-  background-size: 250% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  animation: vp-shine 10s ease-in-out infinite;
+  color: var(--color-foreground);
 }
 @keyframes vp-shine {
   0%,

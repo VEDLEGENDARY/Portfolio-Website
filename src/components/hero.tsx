@@ -26,19 +26,28 @@ const marqueeItems = [
   "Next.js",
   "Node.js",
   "PostgreSQL",
-  "MongoDB",
-  "Redis",
-  "GraphQL",
-  "REST APIs",
-  "TensorFlow",
-  "PyTorch",
-  "OpenCV",
-  "Docker",
-  "Kubernetes",
-  "AWS",
-  "CI/CD",
-  "Git",
-  "Linux",
+  "JavaScript",
+  "Kotlin",
+  "Swift",
+  "SQL",
+  "Express.js",
+  "FastAPI",
+  "Tailwind",
+  "Scikit-learn",
+  "pandas",
+  "NumPy",
+  "Matplotlib",
+  "ChromaDB",
+  "NetworkX",
+  "Tree-Sitter",
+  "Firebase",
+  "Supabase",
+  "Google Cloud",
+  "System Design",
+  "API Design",
+  "Software Architecture",
+  "Data Pipelines",
+  "NLP",
 ];
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -90,7 +99,7 @@ export function Hero() {
 
       {/* ── Hero body ── */}
       <div className="relative z-10 flex flex-1 items-center px-5 sm:px-10 lg:px-16">
-        <div className="mx-auto grid w-full max-w-screen-xl items-center gap-10 min-[900px]:grid-cols-[1.15fr_0.85fr]">
+        <div className="mx-auto grid w-full max-w-screen-xl grid-cols-[1.15fr_0.85fr] items-center gap-4 sm:gap-10">
           {/* Left */}
           <div>
             <motion.div
@@ -101,7 +110,7 @@ export function Hero() {
             >
               <span className="relative flex h-2 w-2">
                 <span
-                  className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
+                  className="absolute inline-flex h-full w-full rounded-full opacity-75"
                   style={{ backgroundColor: "var(--color-accent)" }}
                 />
                 <span
@@ -166,8 +175,8 @@ export function Hero() {
               className="mt-7 max-w-md text-base leading-relaxed sm:text-lg"
               style={{ color: "var(--color-muted)" }}
             >
-              AI, computer vision, and production fintech APIs — shipped to real
-              users at real scale.
+              I turn AI, computer vision, and production fintech APIs into software people
+              can ship, trust, and use at real scale.
             </motion.p>
 
             <motion.div
@@ -180,19 +189,7 @@ export function Hero() {
                 <a
                   data-cursor-grow
                   href="#projects"
-                  className="group inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold transition-colors duration-200"
-                  style={{
-                    backgroundColor: "var(--color-foreground)",
-                    color: "var(--color-background)",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = "var(--color-accent)";
-                    e.currentTarget.style.color = "var(--color-accent-text)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = "var(--color-foreground)";
-                    e.currentTarget.style.color = "var(--color-background)";
-                  }}
+                  className="resume-btn group inline-flex items-center gap-2 px-6 py-3 text-sm font-bold"
                 >
                   See my work
                   <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -219,7 +216,7 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.96, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4, ease }}
-            className="relative mx-auto hidden w-full max-w-[360px] min-[900px]:block min-[900px]:max-w-[420px]"
+            className="relative mx-auto block w-full max-w-[180px] min-[520px]:max-w-[240px] min-[900px]:max-w-[420px]"
           >
             <div
               className="relative overflow-hidden rounded-2xl"
@@ -231,7 +228,7 @@ export function Hero() {
                 width={680}
                 height={860}
                 priority
-                className="project-img h-[clamp(360px,52vh,520px)] w-full"
+                className="project-img aspect-[4/5] h-auto max-h-[clamp(260px,52vh,520px)] w-full object-cover object-center"
               />
               {/* Gradient scrim so the badge is legible */}
               <div
@@ -255,7 +252,7 @@ export function Hero() {
                 >
                   <span className="relative flex h-2 w-2 shrink-0">
                     <span
-                      className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
+                      className="absolute inline-flex h-full w-full rounded-full opacity-75"
                       style={{ backgroundColor: "var(--color-accent)" }}
                     />
                     <span
@@ -284,32 +281,9 @@ export function Hero() {
         </div>
       </div>
 
-      {/* ── Scroll indicator ── */}
-      <motion.div
-        className="pointer-events-none absolute bottom-20 left-1/2 z-10 -translate-x-1/2 hidden sm:flex flex-col items-center gap-1.5"
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.4, duration: 0.8, ease }}
-        aria-hidden
-      >
-        <span
-          className="text-[10px] font-semibold uppercase tracking-[0.3em]"
-          style={{ color: "var(--color-subtle)" }}
-        >
-          Scroll
-        </span>
-        <motion.div
-          animate={{ y: [0, 5, 0] }}
-          transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
-          className="h-5 w-px"
-          style={{ backgroundColor: "var(--color-subtle)" }}
-        />
-      </motion.div>
-
       {/* ── Tech marquee footer ── */}
       <motion.div
-        className="vp-marquee relative z-10 shrink-0 overflow-hidden border-t py-4"
-        style={{ borderColor: "var(--color-border)" }}
+        className="vp-marquee relative z-10 shrink-0 overflow-hidden py-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 0.8 }}

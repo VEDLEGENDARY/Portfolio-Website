@@ -31,13 +31,13 @@ const projects: Project[] = [
     name: "TruScope",
     category: "Fine-tuned LLM",
     description:
-      "Detects bias and clickbait in news. Ships as a web app and Chrome extension — live with a 5.0 rating.",
+      "Fine-tuned LLM classification detects bias and clickbait across a web app and Chrome extension, with a live 5.0 rating.",
     tags: ["LLM", "Classification", "Extension"],
     image: "/truscope.png",
     link: "https://truscope.app/",
     extraLink:
       "https://chromewebstore.google.com/detail/truscope/pncjbinbmlfgkgedabggpfgafomgjamn/",
-    linkLabel: "Live app",
+    linkLabel: "Website",
     extraLabel: "Chrome Store",
     badge: "Live · 5.0★",
     accent: "#60a5fa",
@@ -47,12 +47,12 @@ const projects: Project[] = [
     name: "NaviEats",
     category: "Full-stack web app",
     description:
-      "Navigation-first food discovery app. Ranked #1 nationally at TSA Web Dev against the country's best.",
+      "Navigation-first food discovery app with a polished full-stack experience, ranked #1 nationally at TSA Web Dev.",
     tags: ["Web", "Backend", "UX"],
     image: "/navieats.png",
     imageFit: "contain",
     link: "https://navieats.netlify.app/",
-    linkLabel: "Live demo",
+    linkLabel: "Website",
     badge: "#1 National",
     accent: "#fb923c",
   },
@@ -61,7 +61,7 @@ const projects: Project[] = [
     name: "VFIN",
     category: "Production fintech",
     description:
-      "API layer for a live fintech app. 500+ accounts, 6,000+ daily-synced fund entries, 12 calculators on iOS & Android.",
+      "Production Node.js and Python API layer serving 500+ accounts, syncing 6,000+ fund entries daily, and powering 12 iOS and Android calculators.",
     tags: ["Node.js", "Python", "PostgreSQL"],
     image: "/vfin.png",
     link: "https://play.google.com/store/search?q=vfin&c=apps",
@@ -104,7 +104,7 @@ function ProjectCard({ project }: { project: Project }) {
               alt={`${project.name} screenshot`}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className={project.imageFit === "contain" ? "object-contain object-top" : "object-cover"}
+              className="object-cover object-center"
             />
           </div>
 
@@ -149,41 +149,27 @@ function ProjectCard({ project }: { project: Project }) {
             </div>
 
             <div className="mt-4 flex flex-wrap items-center gap-3">
-              {project.link && (
-                <a
-                  data-cursor-grow
-                  href={project.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold transition-colors duration-200"
-                  style={{ color: "var(--color-foreground)" }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "var(--color-accent)")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = "var(--color-foreground)")
-                  }
-                >
-                  {project.linkLabel}
-                  <ArrowUpRight className="h-3.5 w-3.5" />
-                </a>
-              )}
               {project.extraLink && (
                 <a
                   data-cursor-grow
                   href={project.extraLink}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold transition-colors duration-200"
-                  style={{ color: "var(--color-foreground)" }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "var(--color-accent)")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = "var(--color-foreground)")
-                  }
+                  className="resume-btn inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold"
                 >
                   {project.extraLabel}
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </a>
+              )}
+              {project.link && (
+                <a
+                  data-cursor-grow
+                  href={project.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="resume-btn inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold"
+                >
+                  {project.linkLabel}
                   <ArrowUpRight className="h-3.5 w-3.5" />
                 </a>
               )}
@@ -230,7 +216,7 @@ export function Projects() {
             className="section-eyebrow mb-3 text-xs font-semibold uppercase tracking-[0.35em]"
             style={{ color: "var(--color-accent)" }}
           >
-            Selected work
+            Portfolio
           </p>
           <h2 className="shine-text font-display text-6xl font-extrabold leading-[0.9] tracking-[-0.03em] sm:text-7xl">
             Projects
@@ -240,8 +226,8 @@ export function Projects() {
           className="max-w-xs text-sm leading-relaxed"
           style={{ color: "var(--color-muted)" }}
         >
-          Award-winning ML, live LLM apps, and production backends — built to
-          solve real problems.
+          Computer vision, fine-tuned LLMs, and production fintech systems — built
+          for measurable impact.
         </p>
       </motion.div>
 
@@ -257,14 +243,14 @@ export function Projects() {
           className="group overflow-hidden rounded-3xl glass-card"
           intensity={5}
         >
-          <div className="grid min-[900px]:grid-cols-2">
-            <div className="relative min-h-[280px] overflow-hidden min-[900px]:min-h-[460px]">
+          <div className="grid grid-cols-1">
+            <div className="relative min-h-[280px] overflow-hidden sm:min-h-[360px] lg:min-h-[460px]">
               <Image
                 src="/nexdrop.png"
                 alt="NexDrop — satellite imagery ROI scoring app"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
+                className="object-cover object-center"
               />
             </div>
 
@@ -320,29 +306,29 @@ export function Projects() {
                 </div>
               </div>
 
-              <div className="mt-8">
+              <div className="mt-8 flex flex-wrap items-center gap-3">
                 <MagneticButton strength={0.25}>
                   <a
                     data-cursor-grow
                     href="https://github.com/nshah2006/NexDrop/"
                     target="_blank"
                     rel="noreferrer"
-                    className="group/btn inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold transition-colors duration-200"
-                    style={{
-                      backgroundColor: "var(--color-foreground)",
-                      color: "var(--color-background)",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = "#b9ff66";
-                      e.currentTarget.style.color = "#080808";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = "var(--color-foreground)";
-                      e.currentTarget.style.color = "var(--color-background)";
-                    }}
+                    className="resume-btn group/btn inline-flex items-center gap-2 px-6 py-3 text-sm font-bold"
                   >
                     View source
                     <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                  </a>
+                </MagneticButton>
+                <MagneticButton strength={0.25}>
+                  <a
+                    data-cursor-grow
+                    href="https://v0-nexdrop.vercel.app"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="resume-btn group/btn inline-flex items-center gap-2 px-6 py-3 text-sm font-bold"
+                  >
+                    Live demo
+                    <ArrowUpRight className="h-4 w-4" />
                   </a>
                 </MagneticButton>
               </div>

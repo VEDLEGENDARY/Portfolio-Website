@@ -9,13 +9,13 @@ const highlights = [
   "AI/ML · LLMs · Computer Vision",
   "Production fintech APIs",
   "Automation pipelines",
-  "Full-stack web apps",
-  "End-to-end product delivery",
+  "Full-stack developer",
+  "End-to-end product development",
 ];
 
 const socials = [
   { label: "GitHub", href: "https://github.com/VEDLEGENDARY", icon: Code2 },
-  { label: "LinkedIn", href: "https://linkedin.com/in/ved-patel-1ab48b274", icon: ExternalLink },
+  { label: "LinkedIn", href: "https://linkedin.com/in/vedspatel", icon: ExternalLink },
   { label: "Email", href: "mailto:ved.sp@outlook.com", icon: Mail },
 ];
 
