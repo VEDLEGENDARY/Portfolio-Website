@@ -33,13 +33,10 @@ export function Navbar() {
     <header
       className="fixed left-0 right-0 top-0 z-50 transition-all duration-300"
       style={{
-        /* AT TOP: Transparent background & 0px blur (Grainy noise & grid stay crisp) */
-        /* WHEN SCROLLED: Dark translucent background + strong blur for passing text */
-        backgroundColor: scrolled
-          ? "rgba(8, 8, 8, 0.72)"
-          : "rgba(8, 8, 8, 0)",
-        backdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
+        /* Keep the navbar transparent so only the content behind it is softened. */
+        backgroundColor: "transparent",
+        backdropFilter: "blur(20px) saturate(180%)",
+        WebkitBackdropFilter: "blur(20px) saturate(180%)",
         borderBottom: scrolled
           ? "1px solid rgba(255, 255, 255, 0.08)"
           : "1px solid transparent",
