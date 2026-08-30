@@ -34,13 +34,18 @@ export function Navbar() {
       className="fixed left-0 right-0 top-0 z-50 transition-all duration-300"
       style={{
         /* Preserve the themed highlight while enabling glass only after scrolling. */
-        backgroundColor:
-          theme === "dark" ? "rgba(8, 8, 8, 0.8)" : "rgba(255, 255, 255, 0.8)",
+        backgroundColor: scrolled
+          ? theme === "dark"
+            ? "rgba(8, 8, 8, 0.8)"
+            : "rgba(255, 255, 255, 0.4)"
+          : "transparent",
         backdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
         WebkitBackdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
         borderBottom: scrolled
-          ? "1px solid rgba(255, 255, 255, 0.08)"
-          : "1px solid transparent",
+          ? theme === "dark"
+            ? "2px solid rgba(255,255,255,0.9)"
+            : "2px solid rgba(0,0,0,0.85)"
+          : "2px solid transparent",
       }}
     >
       <nav

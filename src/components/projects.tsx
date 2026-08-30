@@ -37,7 +37,7 @@ const projects: Project[] = [
     link: "https://truscope.app/",
     extraLink:
       "https://chromewebstore.google.com/detail/truscope/pncjbinbmlfgkgedabggpfgafomgjamn/",
-    linkLabel: "Live app",
+    linkLabel: "Website",
     extraLabel: "Chrome Store",
     badge: "Live · 5.0★",
     accent: "#60a5fa",
@@ -52,7 +52,7 @@ const projects: Project[] = [
     image: "/navieats.png",
     imageFit: "contain",
     link: "https://navieats.netlify.app/",
-    linkLabel: "Live demo",
+    linkLabel: "Website",
     badge: "#1 National",
     accent: "#fb923c",
   },
@@ -104,7 +104,7 @@ function ProjectCard({ project }: { project: Project }) {
               alt={`${project.name} screenshot`}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className={project.imageFit === "contain" ? "object-contain object-top" : "object-cover"}
+              className="object-contain object-top"
             />
           </div>
 
@@ -149,41 +149,27 @@ function ProjectCard({ project }: { project: Project }) {
             </div>
 
             <div className="mt-4 flex flex-wrap items-center gap-3">
-              {project.link && (
-                <a
-                  data-cursor-grow
-                  href={project.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="resume-btn inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold"
-                  style={{ color: "var(--color-foreground)" }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "var(--color-accent)")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = "var(--color-foreground)")
-                  }
-                >
-                  {project.linkLabel}
-                  <ArrowUpRight className="h-3.5 w-3.5" />
-                </a>
-              )}
               {project.extraLink && (
                 <a
                   data-cursor-grow
                   href={project.extraLink}
                   target="_blank"
                   rel="noreferrer"
-                  className="resume-btn inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold"
-                  style={{ color: "var(--color-foreground)" }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "var(--color-accent)")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = "var(--color-foreground)")
-                  }
+                  className="resume-btn inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold"
                 >
                   {project.extraLabel}
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </a>
+              )}
+              {project.link && (
+                <a
+                  data-cursor-grow
+                  href={project.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="resume-btn inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold"
+                >
+                  {project.linkLabel}
                   <ArrowUpRight className="h-3.5 w-3.5" />
                 </a>
               )}
@@ -257,8 +243,8 @@ export function Projects() {
           className="group overflow-hidden rounded-3xl glass-card"
           intensity={5}
         >
-          <div className="grid min-[900px]:grid-cols-2">
-            <div className="relative min-h-[280px] overflow-hidden min-[900px]:min-h-[460px]">
+          <div className="grid grid-cols-1">
+            <div className="relative min-h-[280px] overflow-hidden sm:min-h-[360px] lg:min-h-[460px]">
               <Image
                 src="/nexdrop.png"
                 alt="NexDrop — satellite imagery ROI scoring app"
@@ -331,6 +317,18 @@ export function Projects() {
                   >
                     View source
                     <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                  </a>
+                </MagneticButton>
+                <MagneticButton strength={0.25}>
+                  <a
+                    data-cursor-grow
+                    href="https://v0-nexdrop.vercel.app"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="resume-btn group/btn inline-flex items-center gap-2 px-6 py-3 text-sm font-bold"
+                  >
+                    Live demo
+                    <ArrowUpRight className="h-4 w-4" />
                   </a>
                 </MagneticButton>
               </div>

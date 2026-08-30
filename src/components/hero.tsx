@@ -4,7 +4,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { MagneticButton } from "@/components/magnetic-button";
 import { useIntersection } from "@/hooks/useIntersection";
 
@@ -26,19 +26,28 @@ const marqueeItems = [
   "Next.js",
   "Node.js",
   "PostgreSQL",
-  "MongoDB",
-  "Redis",
-  "GraphQL",
-  "REST APIs",
-  "TensorFlow",
-  "PyTorch",
-  "OpenCV",
-  "Docker",
-  "Kubernetes",
-  "AWS",
-  "CI/CD",
-  "Git",
-  "Linux",
+  "JavaScript",
+  "Kotlin",
+  "Swift",
+  "SQL",
+  "Express.js",
+  "FastAPI",
+  "Tailwind",
+  "Scikit-learn",
+  "pandas",
+  "NumPy",
+  "Matplotlib",
+  "ChromaDB",
+  "NetworkX",
+  "Tree-Sitter",
+  "Firebase",
+  "Supabase",
+  "Google Cloud",
+  "System Design",
+  "API Design",
+  "Software Architecture",
+  "Data Pipelines",
+  "NLP",
 ];
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -207,7 +216,7 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.96, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4, ease }}
-            className="relative mx-auto hidden w-full max-w-[360px] min-[900px]:block min-[900px]:max-w-[420px]"
+            className="relative mx-auto block w-full max-w-[180px] min-[520px]:max-w-[240px] min-[900px]:max-w-[420px]"
           >
             <div
               className="relative overflow-hidden rounded-2xl"
@@ -219,7 +228,7 @@ export function Hero() {
                 width={680}
                 height={860}
                 priority
-                className="project-img h-[clamp(360px,52vh,520px)] w-full"
+                className="project-img h-auto max-h-[clamp(260px,52vh,520px)] w-full object-contain object-top"
               />
               {/* Gradient scrim so the badge is legible */}
               <div
@@ -273,7 +282,7 @@ export function Hero() {
       </div>
 
       {/* Static directional cue */}
-      <ArrowUpRight
+      <ArrowDown
         aria-hidden
         className="pointer-events-none absolute bottom-20 left-1/2 z-10 hidden size-5 -translate-x-1/2 sm:block"
         style={{ color: "var(--color-subtle)" }}
