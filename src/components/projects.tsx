@@ -31,7 +31,7 @@ const projects: Project[] = [
     name: "TruScope",
     category: "Fine-tuned LLM",
     description:
-      "Detects bias and clickbait in news. Ships as a web app and Chrome extension — live with a 5.0 rating.",
+      "Fine-tuned LLM classification detects bias and clickbait across a web app and Chrome extension, with a live 5.0 rating.",
     tags: ["LLM", "Classification", "Extension"],
     image: "/truscope.png",
     link: "https://truscope.app/",
@@ -47,7 +47,7 @@ const projects: Project[] = [
     name: "NaviEats",
     category: "Full-stack web app",
     description:
-      "Navigation-first food discovery app. Ranked #1 nationally at TSA Web Dev against the country's best.",
+      "Navigation-first food discovery app with a polished full-stack experience, ranked #1 nationally at TSA Web Dev.",
     tags: ["Web", "Backend", "UX"],
     image: "/navieats.png",
     imageFit: "contain",
@@ -61,7 +61,7 @@ const projects: Project[] = [
     name: "VFIN",
     category: "Production fintech",
     description:
-      "API layer for a live fintech app. 500+ accounts, 6,000+ daily-synced fund entries, 12 calculators on iOS & Android.",
+      "Production Node.js and Python API layer serving 500+ accounts, syncing 6,000+ fund entries daily, and powering 12 iOS and Android calculators.",
     tags: ["Node.js", "Python", "PostgreSQL"],
     image: "/vfin.png",
     link: "https://play.google.com/store/search?q=vfin&c=apps",
@@ -104,7 +104,7 @@ function ProjectCard({ project }: { project: Project }) {
               alt={`${project.name} screenshot`}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="object-cover"
+              className="object-cover object-center"
             />
           </div>
 
@@ -226,8 +226,8 @@ export function Projects() {
           className="max-w-xs text-sm leading-relaxed"
           style={{ color: "var(--color-muted)" }}
         >
-          Award-winning ML, live LLM apps, and production backends — built to
-          solve real problems.
+          Computer vision, fine-tuned LLMs, and production fintech systems — built
+          for measurable impact.
         </p>
       </motion.div>
 
@@ -250,7 +250,7 @@ export function Projects() {
                 alt="NexDrop — satellite imagery ROI scoring app"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
+                className="object-cover object-center"
               />
             </div>
 
@@ -306,7 +306,7 @@ export function Projects() {
                 </div>
               </div>
 
-              <div className="mt-8">
+              <div className="mt-8 flex flex-wrap items-center gap-3">
                 <MagneticButton strength={0.25}>
                   <a
                     data-cursor-grow

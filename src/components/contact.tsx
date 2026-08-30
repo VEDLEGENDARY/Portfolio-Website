@@ -9,8 +9,8 @@ const highlights = [
   "AI/ML · LLMs · Computer Vision",
   "Production fintech APIs",
   "Automation pipelines",
-  "Full-stack web apps",
-  "End-to-end product delivery",
+  "Full-stack developer",
+  "End-to-end product development",
 ];
 
 const socials = [

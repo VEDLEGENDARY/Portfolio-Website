@@ -10,7 +10,9 @@ const KEYWORDS = [
   "machine learning",
   "full-stack",
   "~10 REST APIs",
-  "REST API",
+  "RESTful APIs",
+  "RESTful",
+  "APIs",
   "CI/CD",
   "scalable",
   "production",
@@ -31,7 +33,19 @@ const KEYWORDS = [
   "+50",
   "26th",
   "1st Place",
-  "Programmer"
+  "Programmer",
+  "workshops",
+  "Android",
+  "iOS",
+  "SAT Math",
+  "VEX Robotics",
+  "Computer Science",
+  "Localization",
+  "Autonomous algorithms",
+  "International",
+  "National",
+  "RESTful",
+  "APIs"
 
 ];
 

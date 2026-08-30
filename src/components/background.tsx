@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { GraduationCap, Briefcase, Trophy, ArrowUpRight } from "lucide-react";
+import { GraduationCap, Briefcase, Trophy, ArrowUpRight, Code2 } from "lucide-react";
 import { Chip } from "@/components/chip";
 import { HighlightText } from "@/components/highlight-text";
 import { CardTilt3D } from "@/components/card-tilt";
@@ -56,7 +56,7 @@ const experience: ExperienceEntry[] = [
     period: "Jun 2025 – Feb 2026",
     location: "Gurugram, IN",
     bullets: [
-      "Built 10+ RESTful APIs in Node.js and Python handling legal and transactional data for 500+ accounts.",
+      "Built 10+ RESTful APIs in Node.js and Python for legal and transactional data across 500+ accounts.",
       "Automated a daily pipeline syncing 6,000+ fund entries — cutting 20+ hours of manual work per week.",
       "Shipped 12 investment calculators into Kotlin (Android) and Swift (iOS) apps.",
     ],
@@ -83,7 +83,7 @@ const education = {
   highlights: [
     { icon: Trophy, text: "26th — International VEXU Robotics" },
     { icon: Trophy, text: "1st Place National — TSA Web Dev" },
-    { icon: GraduationCap, text: "Comet Robotics — Programmer" },
+    { icon: GraduationCap, text: "Comet Robotics — Programmer · Localization · Autonomous algorithms" },
   ],
 };
 
@@ -146,7 +146,7 @@ export function Background() {
             href="/VedP_Resume.pdf"
             target="_blank"
             rel="noreferrer"
-            className="resume-btn inline-flex items-center gap-1.5 px-6 py-4 text-sm font-semibold"
+            className="resume-btn inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold"
           >
             Full resume
             <ArrowUpRight className="h-3.5 w-3.5" />
@@ -299,7 +299,7 @@ export function Background() {
                     className="text-sm"
                     style={{ color: "var(--color-foreground-secondary)" }}
                   >
-                    {h.text}
+<HighlightText>{h.text}</HighlightText>
                   </span>
                 </div>
               );
@@ -315,12 +315,24 @@ export function Background() {
           transition={{ duration: 0.7, delay: 0.1, ease }}
           className="glass-card rounded-2xl p-6 sm:p-8 lg:col-start-2 lg:row-start-2"
         >
-          <p
-            className="mb-5 text-xs font-semibold uppercase tracking-[0.35em]"
-            style={{ color: "var(--color-foreground-secondary)" }}
-          >
-            Tech stack
-          </p>
+          <div className="mb-5 flex items-center gap-3">
+            <div
+              className="flex size-9 items-center justify-center rounded-lg"
+              style={{
+                border: "1px solid var(--color-accent)",
+                color: "var(--color-accent)",
+                backgroundColor: "var(--color-surface-raised)",
+              }}
+            >
+              <Code2 className="size-4" />
+            </div>
+            <p
+              className="text-sm font-bold uppercase tracking-[0.35em]"
+              style={{ color: "var(--color-foreground)" }}
+            >
+              Tech stack
+            </p>
+          </div>
           <div className="flex flex-wrap gap-2">
             {skills.map((skill, i) => (
               <motion.div

@@ -81,7 +81,7 @@ export function Navbar() {
                 href={link.href}
                 data-cursor-grow
                 className="group relative text-[15px] font-medium transition-colors duration-200"
-                style={{ color: "var(--color-muted)" }}
+                style={{ color: "color-mix(in srgb, var(--color-foreground) 80%, transparent)" }}
                 onMouseEnter={(e) =>
                   (e.currentTarget.style.color = "var(--color-foreground)")
                 }
@@ -152,7 +152,7 @@ export function Navbar() {
             <a
               data-cursor-grow
               href="mailto:ved.sp@outlook.com"
-              className="resume-btn inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold"
+              className="resume-btn connect-btn inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold"
               style={{
                 backgroundColor: "var(--color-accent)",
                 color: "var(--color-accent-text)",
@@ -166,8 +166,8 @@ export function Navbar() {
                 e.currentTarget.style.color = "var(--color-background)";
               }}
             >
-              <Mail className="h-3.5 w-3.5" />
               <span className="hidden sm:inline">Connect</span>
+              <Mail className="h-3.5 w-3.5" />
             </a>
           </MagneticButton>
         </div>

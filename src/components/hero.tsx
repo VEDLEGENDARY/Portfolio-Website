@@ -4,7 +4,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { MagneticButton } from "@/components/magnetic-button";
 import { useIntersection } from "@/hooks/useIntersection";
 
@@ -110,7 +110,7 @@ export function Hero() {
             >
               <span className="relative flex h-2 w-2">
                 <span
-                  className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
+                  className="absolute inline-flex h-full w-full rounded-full opacity-75"
                   style={{ backgroundColor: "var(--color-accent)" }}
                 />
                 <span
@@ -175,8 +175,8 @@ export function Hero() {
               className="mt-7 max-w-md text-base leading-relaxed sm:text-lg"
               style={{ color: "var(--color-muted)" }}
             >
-              AI, computer vision, and production fintech APIs — shipped to real
-              users at real scale.
+              I turn AI, computer vision, and production fintech APIs into software people
+              can ship, trust, and use at real scale.
             </motion.p>
 
             <motion.div
@@ -228,7 +228,7 @@ export function Hero() {
                 width={680}
                 height={860}
                 priority
-                className="project-img aspect-[4/5] h-auto max-h-[clamp(260px,52vh,520px)] w-full object-cover object-top"
+                className="project-img aspect-[4/5] h-auto max-h-[clamp(260px,52vh,520px)] w-full object-cover object-center"
               />
               {/* Gradient scrim so the badge is legible */}
               <div
@@ -252,7 +252,7 @@ export function Hero() {
                 >
                   <span className="relative flex h-2 w-2 shrink-0">
                     <span
-                      className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
+                      className="absolute inline-flex h-full w-full rounded-full opacity-75"
                       style={{ backgroundColor: "var(--color-accent)" }}
                     />
                     <span
@@ -280,13 +280,6 @@ export function Hero() {
           </motion.div>
         </div>
       </div>
-
-      {/* Static directional cue */}
-      <ArrowDown
-        aria-hidden
-        className="pointer-events-none absolute bottom-20 left-1/2 z-10 hidden size-5 -translate-x-1/2 sm:block"
-        style={{ color: "var(--color-subtle)" }}
-      />
 
       {/* ── Tech marquee footer ── */}
       <motion.div
