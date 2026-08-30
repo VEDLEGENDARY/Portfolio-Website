@@ -15,7 +15,7 @@ const highlights = [
 
 const socials = [
   { label: "GitHub", href: "https://github.com/VEDLEGENDARY", icon: Code2 },
-  { label: "LinkedIn", href: "https://linkedin.com/in/ved-patel-1ab48b274", icon: ExternalLink },
+  { label: "LinkedIn", href: "https://linkedin.com/in/vedspatel", icon: ExternalLink },
   { label: "Email", href: "mailto:ved.sp@outlook.com", icon: Mail },
 ];
 

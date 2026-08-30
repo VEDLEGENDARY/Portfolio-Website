@@ -286,22 +286,9 @@ html.is-loading body {
   }
 }
 
-/* ── Shine sweep across large headings ── */
+/* ── Static section headings ── */
 .shine-text {
-  background: linear-gradient(
-    100deg,
-    var(--color-foreground) 0%,
-    var(--color-foreground) 40%,
-    var(--color-accent) 50%,
-    var(--color-foreground) 60%,
-    var(--color-foreground) 100%
-  );
-  background-size: 250% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  animation: vp-shine 10s ease-in-out infinite;
+  color: var(--color-foreground);
 }
 @keyframes vp-shine {
   0%,

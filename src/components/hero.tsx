@@ -99,7 +99,7 @@ export function Hero() {
 
       {/* ── Hero body ── */}
       <div className="relative z-10 flex flex-1 items-center px-5 sm:px-10 lg:px-16">
-        <div className="mx-auto grid w-full max-w-screen-xl items-center gap-10 min-[900px]:grid-cols-[1.15fr_0.85fr]">
+        <div className="mx-auto grid w-full max-w-screen-xl grid-cols-[1.15fr_0.85fr] items-center gap-4 sm:gap-10">
           {/* Left */}
           <div>
             <motion.div
@@ -228,7 +228,7 @@ export function Hero() {
                 width={680}
                 height={860}
                 priority
-                className="project-img h-auto max-h-[clamp(260px,52vh,520px)] w-full object-contain object-top"
+                className="project-img aspect-[4/5] h-auto max-h-[clamp(260px,52vh,520px)] w-full object-cover object-top"
               />
               {/* Gradient scrim so the badge is legible */}
               <div

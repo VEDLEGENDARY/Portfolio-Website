@@ -104,7 +104,7 @@ function ProjectCard({ project }: { project: Project }) {
               alt={`${project.name} screenshot`}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="object-contain object-top"
+              className="object-cover"
             />
           </div>
 
@@ -216,7 +216,7 @@ export function Projects() {
             className="section-eyebrow mb-3 text-xs font-semibold uppercase tracking-[0.35em]"
             style={{ color: "var(--color-accent)" }}
           >
-            Selected work
+            Portfolio
           </p>
           <h2 className="shine-text font-display text-6xl font-extrabold leading-[0.9] tracking-[-0.03em] sm:text-7xl">
             Projects
