@@ -151,16 +151,16 @@ export function Contact() {
             data-cursor-grow
             className="inline-flex items-center gap-2.5 rounded-full px-4 py-2 text-sm font-bold transition-colors duration-200"
             style={{
-              border: "2px solid rgba(255,255,255,0.2)",
-              color: "#f0f0f0",
+              border: "2px solid var(--color-control-border)",
+              color: "var(--color-foreground)",
               backgroundColor: "transparent",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.45)";
-              e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.06)";
+              e.currentTarget.style.borderColor = "var(--color-control-hover)";
+              e.currentTarget.style.backgroundColor = "var(--color-control-hover-surface)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
+              e.currentTarget.style.borderColor = "var(--color-control-border)";
               e.currentTarget.style.backgroundColor = "transparent";
             }}
           >
@@ -188,20 +188,20 @@ export function Contact() {
                 rel={href.startsWith("mailto") ? undefined : "noreferrer"}
                 className="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold transition-colors duration-200"
                 style={{
-                  border: "2px solid rgba(255,255,255,0.2)",
-                  color: "#f0f0f0",
-                  backgroundColor: "transparent",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.5)";
-                  e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.06)";
-                  e.currentTarget.style.color = "#ffffff";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
-                  e.currentTarget.style.backgroundColor = "transparent";
-                  e.currentTarget.style.color = "#f0f0f0";
-                }}
+              border: "2px solid var(--color-control-border)",
+              color: "var(--color-foreground)",
+              backgroundColor: "transparent",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = "var(--color-control-hover)";
+              e.currentTarget.style.backgroundColor = "var(--color-control-hover-surface)";
+              e.currentTarget.style.color = "var(--color-foreground)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = "var(--color-control-border)";
+              e.currentTarget.style.backgroundColor = "transparent";
+              e.currentTarget.style.color = "var(--color-foreground)";
+            }}
               >
                 <Icon className="h-3.5 w-3.5" />
                 {label}
@@ -215,13 +215,13 @@ export function Contact() {
           <a
             href="mailto:ved.sp@outlook.com"
             className="text-xs font-medium transition-colors duration-200"
-            style={{ color: "rgba(240,240,240,0.55)" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#f0f0f0")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(240,240,240,0.55)")}
+style={{ color: "var(--color-muted)" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-foreground)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-muted)")}
           >
             ved.sp@outlook.com
           </a>
-          <p className="text-xs" style={{ color: "rgba(240,240,240,0.35)" }}>
+          <p className="text-xs" style={{ color: "var(--color-subtle)" }}>
             &copy; {new Date().getFullYear()} Ved Patel
           </p>
         </div>

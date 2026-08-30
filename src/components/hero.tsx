@@ -99,7 +99,7 @@ export function Hero() {
 
       {/* ── Hero body ── */}
       <div className="relative z-10 flex flex-1 items-center px-5 sm:px-10 lg:px-16">
-        <div className="mx-auto grid w-full max-w-screen-xl grid-cols-[1.15fr_0.85fr] items-center gap-4 sm:gap-10">
+        <div className="mx-auto grid w-full max-w-screen-xl grid-cols-1 items-center gap-8 sm:grid-cols-[1.15fr_0.85fr] sm:gap-10">
           {/* Left */}
           <div>
             <motion.div
@@ -236,7 +236,7 @@ export function Hero() {
                 className="absolute inset-x-0 bottom-0 h-28 pointer-events-none"
                 style={{
                   background:
-                    "linear-gradient(to top, rgba(8,8,8,0.82) 0%, transparent 100%)",
+                    "linear-gradient(to top, var(--color-on-image-surface) 0%, transparent 100%)",
                 }}
               />
               {/* Open to work badge — original chip style */}
@@ -244,8 +244,8 @@ export function Hero() {
                 <div
                   className="inline-flex items-center gap-2.5 rounded-full px-3.5 py-2"
                   style={{
-                    backgroundColor: "rgba(8,8,8,0.72)",
-                    border: "1px solid rgba(255,255,255,0.1)",
+                    backgroundColor: "var(--color-on-image-surface)",
+                    border: "1px solid var(--color-on-image-border)",
                     backdropFilter: "blur(16px)",
                     WebkitBackdropFilter: "blur(16px)",
                   }}

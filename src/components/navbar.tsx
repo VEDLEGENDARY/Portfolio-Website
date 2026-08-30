@@ -34,11 +34,7 @@ export function Navbar() {
       className="fixed left-0 right-0 top-0 z-50 transition-all duration-300"
       style={{
         /* Preserve the themed highlight while enabling glass only after scrolling. */
-        backgroundColor: scrolled
-          ? theme === "dark"
-            ? "rgba(8, 8, 8, 0.8)"
-            : "rgba(255, 255, 255, 0.4)"
-          : "transparent",
+        backgroundColor: scrolled ? "var(--color-nav-blur)" : "transparent",
         backdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
         WebkitBackdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
         borderBottom: "none",
@@ -108,23 +104,17 @@ export function Navbar() {
               aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
               className="flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-200"
               style={{
-                border: theme === "dark"
-                  ? "1px solid rgba(255,255,255,0.18)"
-                  : "1px solid rgba(0,0,0,0.25)",
-                color: theme === "dark" ? "#ffffff" : "#111111",
+                border: "1px solid var(--color-control-border)",
+                color: "var(--color-foreground)",
                 backgroundColor: "transparent",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = theme === "dark"
-                  ? "rgba(255,255,255,0.55)"
-                  : "rgba(0,0,0,0.75)";
+                e.currentTarget.style.borderColor = "var(--color-control-hover)";
                 e.currentTarget.style.color = "var(--color-accent)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = theme === "dark"
-                  ? "rgba(255,255,255,0.18)"
-                  : "rgba(0,0,0,0.25)";
-                e.currentTarget.style.color = theme === "dark" ? "#ffffff" : "#111111";
+                e.currentTarget.style.borderColor = "var(--color-control-border)";
+                e.currentTarget.style.color = "var(--color-foreground)";
               }}
             >
               {theme === "dark" ? (

@@ -31,7 +31,13 @@
   --color-ghost: rgba(255, 255, 255, 0.22);
 
   /* nav: frosted glass background */
-  --color-nav-blur: rgba(8, 8, 8, 0.72);
+  --color-nav-blur: rgba(8, 8, 8, 0.78);
+  --color-on-image: #ffffff;
+  --color-on-image-surface: rgba(8, 8, 8, 0.72);
+  --color-on-image-border: rgba(255, 255, 255, 0.14);
+  --color-control-border: rgba(255, 255, 255, 0.2);
+  --color-control-hover: rgba(255, 255, 255, 0.55);
+  --color-control-hover-surface: rgba(255, 255, 255, 0.06);
 }
 
 /* ── Light mode overrides ── */
@@ -58,7 +64,13 @@ html[data-theme="light"] {
   --color-ghost: rgba(0, 0, 0, 0.18);
 
   /* nav: frosted glass background */
-  --color-nav-blur: rgba(245, 245, 240, 0.8);
+  --color-nav-blur: rgba(255, 255, 255, 0.84);
+  --color-on-image: #ffffff;
+  --color-on-image-surface: rgba(13, 13, 13, 0.72);
+  --color-on-image-border: rgba(255, 255, 255, 0.18);
+  --color-control-border: rgba(0, 0, 0, 0.2);
+  --color-control-hover: rgba(0, 0, 0, 0.58);
+  --color-control-hover-surface: rgba(0, 0, 0, 0.06);
 }
 
 @layer base {
