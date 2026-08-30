@@ -31,7 +31,7 @@ export function Navbar() {
 
   return (
     <header
-      className="fixed left-0 right-0 top-0 z-50"
+      className="fixed left-0 right-0 top-0 z-50 transition-all duration-300"
       style={{
         /* Preserve the themed highlight while enabling glass only after scrolling. */
         backgroundColor: scrolled
@@ -41,9 +41,7 @@ export function Navbar() {
           : "transparent",
         backdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
         WebkitBackdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
-        boxShadow: "none",
-        backgroundImage: "none",
-        border: "none",
+        borderBottom: "none",
       }}
     >
       <nav

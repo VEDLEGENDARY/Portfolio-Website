@@ -409,7 +409,6 @@ html[data-theme="light"] .glass-nav--top {
 
 /* Grain overlay via SVG feTurbulence — sits above bg, under content */
 .glass-nav::before {
-  display: none;
   content: "";
   position: absolute;
   inset: 0;
