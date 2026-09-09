@@ -128,12 +128,12 @@ export function Navbar() {
           <MagneticButton strength={0.25}>
             <a
               data-cursor-grow
-              href="/VedP_Resume.pdf"
+              href="/Resume_VedPatel.pdf"
               target="_blank"
               rel="noreferrer"
               className="resume-btn hidden items-center gap-1.5 px-4 py-2 text-xs font-semibold sm:inline-flex"
             >
-              Resume
+              Resume_VedPatel
               <ArrowUpRight className="h-3.5 w-3.5" />
             </a>
           </MagneticButton>

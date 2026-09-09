@@ -199,12 +199,12 @@ export function Hero() {
               <MagneticButton strength={0.28}>
                 <a
                   data-cursor-grow
-                  href="/VedP_Resume.pdf"
+                  href="/Resume_VedPatel.pdf"
                   target="_blank"
                   rel="noreferrer"
                   className="resume-btn inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold"
                 >
-                  Resume
+                  Resume_VedPatel
                   <ArrowUpRight className="h-4 w-4" />
                 </a>
               </MagneticButton>

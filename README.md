@@ -165,7 +165,7 @@ portfoliowebsite/
 │       └── lenis-provider.tsx   ← Smooth scrolling engine (Lenis)
 │
 └── public/
-    ├── VedP_Resume.pdf          ← Professional resume document
+   ├── Resume_VedPatel.pdf       ← Professional resume document
     ├── nexdrop.png              ← Project previews
     └── profilepic.jpeg          ← Headshot media
 ```
@@ -294,6 +294,22 @@ Navigate to `http://localhost:3000` to view the running application.
 pnpm build
 pnpm start
 ```
+
+### Figma MCP
+
+This repository includes a project-scoped Figma MCP server in `.vscode/mcp.json`.
+In VS Code, open the Command Palette and run **MCP: List Servers**, select
+`figma`, then choose **Start** and complete the Figma authorization prompt.
+Once connected, Copilot can inspect the selected Figma file, read its design
+context, capture screenshots, and use that context while editing this app.
+
+The current design handoff is the [VP Portfolio — Upscaled Direction](https://www.figma.com/design/NwmnnOIVFf4JKqc4EErjDt?node-id=4-5)
+frame. The original captured implementation remains available in the same file
+for visual comparison.
+
+When asking Copilot to work from a design, include the Figma file or frame URL
+and identify the target route or component. The MCP configuration contains no
+credentials; authorization is handled by VS Code and Figma.
 
 <br />
 

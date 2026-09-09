@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Bricolage_Grotesque } from "next/font/google";
+import Script from "next/script";
 import { ThemeProvider } from "@/components/theme-provider";
 import { LenisProvider } from "@/providers/lenis-provider";
 import "./globals.css";
@@ -70,6 +71,10 @@ export default function RootLayout({
         className="min-h-full font-sans bg-[var(--color-background)] text-[var(--color-foreground)]"
         suppressHydrationWarning
       >
+        <Script
+          src="https://mcp.figma.com/mcp/html-to-design/capture.js"
+          strategy="afterInteractive"
+        />
         <LenisProvider>
           <ThemeProvider>
             {children}
