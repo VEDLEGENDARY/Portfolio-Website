@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "../styles/motion.css";
 
 :root {
   --paper: #f5f0e9;
@@ -51,7 +52,7 @@ em { font-weight: 400; }
 .text-link { display: inline-flex; align-items: center; gap: 14px; padding-block: 10px; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--accent); }
 .text-link:hover { color: var(--ink); border-color: var(--accent); }
 .text-link svg { width: 15px; height: 15px; }
-.portrait-frame { aspect-ratio: 4 / 5; overflow: hidden; background: var(--surface); }
+.portrait-frame { position: relative; box-shadow: 0 16px 40px #2927250a; aspect-ratio: 4 / 5; overflow: hidden; background: var(--surface); }
 .portrait img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
 .portrait figcaption { display: flex; justify-content: space-between; gap: 15px; margin-top: 14px; color: var(--muted); font-size: 9px; line-height: 1.6; }
 .hero-bottom { display: flex; justify-content: space-between; gap: 20px; padding-block: 24px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--muted); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
@@ -60,10 +61,10 @@ em { font-weight: 400; }
 .section-heading .eyebrow { margin-bottom: 18px; }
 .section-note { max-width: 280px; font-size: 13px; line-height: 1.8; color: var(--muted); }
 .project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 66px 40px; }
-.project-frame { aspect-ratio: 16 / 11; display: grid; place-items: center; padding: 28px; background: var(--surface); overflow: hidden; }
-.project-frame img { width: 100%; height: 100%; object-fit: contain; transition: transform .4s; }
-.project-frame:hover img { transform: scale(1.025); }
-.project-meta { display: flex; justify-content: space-between; align-items: baseline; margin-block: 22px 8px; }
+.project-frame { border: 1px solid var(--line); aspect-ratio: 16 / 11; display: grid; place-items: center; padding: 28px; background: var(--surface); overflow: hidden; }
+.project-frame img { box-shadow: 0 12px 28px #29272512; width: 100%; height: 100%; object-fit: contain; transition: transform .4s; }
+
+.project-meta { border-top: 1px solid var(--line); padding-top: 20px; display: flex; justify-content: space-between; align-items: baseline; margin-block: 22px 8px; }
 .project-number { color: var(--muted); font-size: 11px; }
 .project-description { font-size: 13px; line-height: 1.85; color: var(--muted); margin-top: 14px; max-width: 490px; }
 .project-tags { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 10px; color: var(--muted); margin-block: 18px 8px; }
@@ -75,7 +76,7 @@ em { font-weight: 400; }
 .experience-entry p, .experience-entry li { color: var(--muted); font-size: 13px; line-height: 1.85; }
 .experience-entry ul { padding-left: 18px; margin-bottom: 0; }
 .experience-entry li + li { margin-top: 8px; }
-.contact-section { background: #292725; color: #f5f0e9; padding-block: 84px 30px; }
+.contact-section { position: relative; background: #292725; color: #f5f0e9; padding-block: 84px 30px; }
 .contact-section .eyebrow { color: inherit; opacity: .7; margin-bottom: 25px; }
 .contact-heading { display: flex; justify-content: space-between; align-items: end; gap: 35px; }
 .contact-section .text-link { color: var(--champagne); border-color: #7f7467; }
@@ -101,7 +102,13 @@ em { font-weight: 400; }
   .project-frame { padding: 20px; }
   .site-footer { align-items: start; flex-direction: column; margin-top: 55px; }
 }
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after { transition: none !important; }
+
+/* Fine framing and offset compositions give the page an editorial rhythm. */
+.portrait { position: relative; }
+.portrait::before { content: ""; position: absolute; inset: -14px 14px 40px -14px; border: 1px solid var(--line); pointer-events: none; }
+
+.contact-section::before { content: ""; position: absolute; top: 0; left: 6%; right: 6%; height: 1px; background: var(--champagne); opacity: .45; }
+@media (min-width: 1000px) {
+  .project-grid { column-gap: 7%; align-items: start; }
+  .project-grid article:nth-child(even) { margin-top: 100px; }
 }

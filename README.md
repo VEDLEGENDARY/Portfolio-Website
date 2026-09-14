@@ -22,12 +22,13 @@ npm run build
 
 ## Editing
 
-- `src/app/globals.css`: palette, typography, layout, responsive and reduced-motion rules.
-- `src/components/projects.tsx`: project data and a shared project layout.
-- `src/components/background.tsx`: experience, education, and skills.
+- `src/app/globals.css`: palette, typography, and responsive layout.
+- `src/styles/motion.css`: headline choreography, hover interactions, and reduced-motion rules.
+- `src/content/`: project and career data, separate from presentation.
+- `src/components/`: server-rendered page sections and shared theme/motion controllers.
 - `src/components/hero.tsx` and `contact.tsx`: introduction and contact details.
 - `public/Resume_VedPatel.pdf`: linked résumé.
 
 Images use Next.js optimization and responsive sizing. Content renders on the server;
-only theme selection requires client-side state. The site uses native scrolling,
+theme selection and one shared animation observer provide client-side enhancements. The site uses native scrolling,
 visible keyboard focus, a skip link, and reduced-motion preferences.
