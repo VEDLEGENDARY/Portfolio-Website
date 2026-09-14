@@ -22,8 +22,8 @@
   .project-frame img { transition: transform .9s cubic-bezier(.22, 1, .36, 1), filter .9s; }
   .project-grid article:hover .project-frame img { transform: scale(1.045); }
   .project-grid article:focus-within .project-frame img { transform: scale(1.025); }
-  .portrait img { transition: filter 1.4s, transform 1.4s cubic-bezier(.22, 1, .36, 1); }
-  .portrait:hover img { filter: grayscale(.25); transform: scale(1.035); }
+  .portrait img { transition: transform 1.4s cubic-bezier(.22, 1, .36, 1); }
+  .portrait:hover img { transform: scale(1.035); }
 }
 @keyframes typeset {
   from { transform: translateY(110%) rotate(2deg); }
