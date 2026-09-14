@@ -16,7 +16,7 @@ export const viewport: Viewport = { themeColor: "#f5f0e9", colorScheme: "light d
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${sans.variable} ${display.variable}`} suppressHydrationWarning>
-      <body><ThemeProvider>{children}</ThemeProvider></body>
+      <body suppressHydrationWarning><ThemeProvider>{children}</ThemeProvider></body>
     </html>
   );
 }
