@@ -2,7 +2,8 @@
 
 A responsive editorial portfolio built with Next.js, TypeScript, and React.
 Cormorant Garamond provides display typography; Inter handles navigation and body copy.
-The warm ivory and charcoal themes share taupe surfaces and a restrained blush accent.
+Espresso and parchment themes use coffee-toned surfaces and restrained brass accents.
+Every fresh page load starts dark; the navigation toggle changes the theme for the current visit.
 
 ## Development
 

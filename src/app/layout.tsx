@@ -11,11 +11,11 @@ export const metadata: Metadata = {
   description: "Software engineer building thoughtful products with AI, computer vision, full-stack development, and automation.",
   openGraph: { title: "Ved Patel — Software Engineer", description: "Selected work in intelligent systems and useful software.", type: "website" },
 };
-export const viewport: Viewport = { themeColor: "#f5f0e9", colorScheme: "light dark" };
+export const viewport: Viewport = { themeColor: "#1c1613", colorScheme: "light dark" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${sans.variable} ${display.variable}`} suppressHydrationWarning>
+    <html lang="en" data-theme="dark" className={`${sans.variable} ${display.variable}`} suppressHydrationWarning>
       <body suppressHydrationWarning><ThemeProvider>{children}</ThemeProvider></body>
     </html>
   );
