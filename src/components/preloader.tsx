@@ -30,19 +30,15 @@ export function Preloader() {
   if (!visible) return null;
 
   return (
-    <div className="preloader" onAnimationEnd={event => {
+    <div className="preloader" aria-hidden="true" onAnimationEnd={event => {
       if (event.target === event.currentTarget) skip();
     }}>
       <div className="intro-curtain intro-curtain-top" aria-hidden="true" />
       <div className="intro-curtain intro-curtain-bottom" aria-hidden="true" />
       <div className="intro-composition" aria-hidden="true">
-        <span className="intro-kicker">The portfolio of</span>
         <div className="intro-name"><span>Ved</span> <em>Patel.</em></div>
         <div className="intro-rule"><span /></div>
-        <span className="intro-caption">Thoughtfully engineered. Carefully composed.</span>
       </div>
-      <div className="intro-footer" aria-hidden="true"><span>Software & systems</span><span>Dallas, Texas</span></div>
-      <button className="intro-skip" onClick={skip}>Skip intro <span aria-hidden="true">↗</span></button>
     </div>
   );
 }

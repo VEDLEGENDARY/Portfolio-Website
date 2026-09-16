@@ -13,12 +13,16 @@
 }
 .text-link:hover::after, .text-link:focus-visible::after { transform: scaleX(1); }
 .text-link svg { transition: transform .3s ease; }
-.text-link:hover svg { transform: translate(2px, -2px); }
+.text-link:hover svg, .text-link:focus-visible svg { transform: translate(2px, -2px); }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .project-frame img, .portrait img { transition: transform .65s cubic-bezier(.22, 1, .36, 1); }
   .project-grid article:hover .project-frame img,
   .project-grid article:focus-within .project-frame img { transform: scale(1.015); }
   .portrait:hover img { transform: scale(1.015); }
+  .project-frame { transition: border-color .4s, box-shadow .4s; }
+  .project-grid article:hover .project-frame, .project-grid article:focus-within .project-frame { border-color: var(--accent); box-shadow: 0 12px 32px #00000010; }
+  .theme-toggle { transition: border-color .3s, transform .3s; }
+  .theme-toggle:hover { transform: translateY(-1px); }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

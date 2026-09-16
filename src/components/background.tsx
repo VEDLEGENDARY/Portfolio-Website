@@ -3,7 +3,7 @@ import { experience, skillGroups } from "@/content/background";
 export function Background() {
   return (
     <section id="background" className="section shell background-section" aria-labelledby="background-title">
-      <div className="section-heading"><div><p className="eyebrow">02 / Background</p><h2 id="background-title">Always building.<br /><em>Always learning.</em></h2></div><p className="section-note">An engineering foundation, a practical mindset, and an appetite for the unfamiliar.</p></div>
+      <div className="section-heading"><div><p className="eyebrow">Background</p><h2 id="background-title">Always building.<br /><em>Always learning.</em></h2></div><p className="section-note">An engineering foundation, a practical mindset, and an appetite for the unfamiliar.</p></div>
       <div className="background-grid">
         <div>{experience.map(entry => <article className="experience-entry" key={entry.org}><p className="eyebrow">{entry.period}</p><h3>{entry.role}</h3><p>{entry.org}</p><ul>{entry.bullets.map(bullet => <li key={bullet}>{bullet}</li>)}</ul></article>)}</div>
         <div>

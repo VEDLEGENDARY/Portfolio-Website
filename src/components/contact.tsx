@@ -4,7 +4,7 @@ export function Contact() {
   return (
     <section id="contact" className="contact-section" aria-labelledby="contact-title">
       <div className="shell">
-        <p className="eyebrow">03 / Get in touch</p>
+        <p className="eyebrow">Get in touch</p>
         <div className="contact-heading"><h2 id="contact-title">Good things start<br /><em>with a conversation.</em></h2><a className="text-link" href="mailto:ved.sp@outlook.com">ved.sp@outlook.com <ArrowUpRight aria-hidden="true" /></a></div>
         <footer className="site-footer">
           <a className="wordmark" href="#top">Ved Patel.</a>
