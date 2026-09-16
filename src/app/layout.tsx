@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Cormorant_Garamond } from "next/font/google";
+import Script from "next/script";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
@@ -16,7 +17,10 @@ export const viewport: Viewport = { themeColor: "#1c1613", colorScheme: "light d
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" data-theme="dark" className={`${sans.variable} ${display.variable}`} suppressHydrationWarning>
-      <body suppressHydrationWarning><ThemeProvider>{children}</ThemeProvider></body>
+      <body suppressHydrationWarning>
+        <ThemeProvider>{children}</ThemeProvider>
+        <Script src="/_vercel/insights/script.js" strategy="afterInteractive" />
+      </body>
     </html>
   );
 }

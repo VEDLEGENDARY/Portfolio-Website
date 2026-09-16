@@ -35,3 +35,7 @@ theme selection and one shared animation observer provide client-side enhancemen
 visible keyboard focus, a skip link, and reduced-motion preferences.
 
 The opening title lasts 2.2 seconds, supports Escape/Tab dismissal, and is omitted for reduced-motion preferences. The opening is decorative and never captures pointer input. CSS dismisses it even if JavaScript fails; it never waits on network requests.
+
+## Private reach analytics
+
+When this project is deployed on Vercel, enable **Analytics** in the project dashboard. The layout loads Vercel's first-party Web Analytics script after the page becomes interactive. Page Views count every page load, including repeat opens from the same visitor, while the totals remain visible only in the private Vercel dashboard. No count, identifier, or analytics UI is rendered in the portfolio.
