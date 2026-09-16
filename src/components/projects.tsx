@@ -7,7 +7,7 @@ export function Projects() {
     <section id="projects" className="section shell" aria-labelledby="work-title">
       <div className="section-heading">
         <div><p className="eyebrow">Selected work</p><h2 id="work-title">Ideas, put to work.</h2></div>
-        <p className="section-note">From machine learning to everyday tools. A selection of things I’ve built and shipped.</p>
+        <p className="section-note">Selected work across computer vision, language systems, full-stack products, and mobile engineering.</p>
       </div>
       <div className="project-grid">
         {projects.map((project, index) => (

@@ -7,9 +7,9 @@ const sans = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap
 const display = Cormorant_Garamond({ subsets: ["latin"], variable: "--font-display", weight: ["400", "500"], style: ["normal", "italic"], display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Ved Patel — Software Engineer",
-  description: "Software engineer building thoughtful products with AI, computer vision, full-stack development, and automation.",
-  openGraph: { title: "Ved Patel — Software Engineer", description: "Selected work in intelligent systems and useful software.", type: "website" },
+  title: "Ved Patel — Computer Science & Software Engineering",
+  description: "Computer science student at UT Dallas building production APIs, computer vision systems, retrieval tools, and autonomous robotics software.",
+  openGraph: { title: "Ved Patel — Computer Science & Software Engineering", description: "Selected work across production software, applied AI, and autonomous systems.", type: "website" },
 };
 export const viewport: Viewport = { themeColor: "#1c1613", colorScheme: "light dark" };
 
