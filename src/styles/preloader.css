@@ -1,0 +1,27 @@
+/* CSS completes the opening even if hydration is delayed or JavaScript is unavailable. */
+.preloader { position: fixed; inset: 0; z-index: 100; color: #efdfc6; animation: intro-dismiss 2.8s both; }
+.intro-curtain { position: absolute; left: 0; width: 100%; height: 50.1%; background: #19120e; }
+.intro-curtain-top { top: 0; background: radial-gradient(ellipse at 50% 100%, #44302166, transparent 65%), #19120e; animation: curtain-up 1s 1.8s cubic-bezier(.76, 0, .24, 1) both; }
+.intro-curtain-bottom { bottom: 0; background: radial-gradient(ellipse at 50% 0%, #44302166, transparent 65%), #19120e; animation: curtain-down 1s 1.8s cubic-bezier(.76, 0, .24, 1) both; }
+.intro-composition { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; animation: intro-fade .5s 1.65s both; }
+.intro-kicker, .intro-caption, .intro-footer, .intro-skip { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; }
+.intro-kicker { color: #c3a582; animation: intro-arrive .7s .1s both; }
+.intro-name { margin-block: 24px 26px; font-family: var(--font-display), Georgia, serif; font-size: clamp(84px, 12vw, 180px); line-height: 1; letter-spacing: -.065em; overflow: hidden; padding: 0 .1em .1em; }
+.intro-name span, .intro-name em { display: inline-block; animation: intro-typeset 1.1s cubic-bezier(.22, 1, .36, 1) both; }
+.intro-name em { color: #caa473; animation-delay: .13s; }
+.intro-rule { width: min(280px, 60vw); height: 1px; background: #caa47326; overflow: hidden; }
+.intro-rule span { display: block; width: 100%; height: 100%; background: #caa473; transform-origin: left; animation: intro-line 1.5s .15s cubic-bezier(.22, 1, .36, 1) both; }
+.intro-caption { color: #bda990; margin-top: 24px; line-height: 2; text-align: center; letter-spacing: .14em; animation: intro-arrive .8s .35s both; }
+.intro-footer { position: absolute; left: 6%; right: 6%; bottom: 38px; display: flex; justify-content: space-between; color: #a68e74; animation: intro-fade .35s 1.6s both; }
+.intro-skip { position: absolute; right: 6%; top: 32px; padding: 12px 0; border: 0; border-bottom: 1px solid #72573d; background: transparent; color: #d9bc96; cursor: pointer; }
+.intro-skip:hover { color: #fff1db; }
+@keyframes intro-typeset { from { transform: translateY(110%); } to { transform: translateY(0); } }
+@keyframes intro-arrive { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes intro-line { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes intro-fade { to { opacity: 0; } }
+@keyframes curtain-up { to { transform: translateY(-101%); } }
+@keyframes curtain-down { to { transform: translateY(101%); } }
+@keyframes intro-dismiss { 0%, 99% { visibility: visible; } 100% { visibility: hidden; pointer-events: none; } }
+@media (prefers-reduced-motion: reduce) { .preloader { display: none; } }
+@media (max-width: 540px) { .intro-footer { font-size: 8px; letter-spacing: .12em; } }
+[data-intro="skipped"] .title-line > *, [data-intro="skipped"] .hero-copy, [data-intro="skipped"] .hero .actions { animation: none; }
