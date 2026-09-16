@@ -2,7 +2,7 @@
 
 A responsive editorial portfolio built with Next.js, TypeScript, and React.
 Cormorant Garamond provides display typography; Inter handles navigation and body copy.
-Espresso and parchment themes use coffee-toned surfaces and restrained brass accents.
+Espresso and parchment themes use coffee-toned surfaces and restrained muted taupe accents.
 Every fresh page load starts dark; the navigation toggle changes the theme for the current visit.
 
 ## Development
@@ -34,4 +34,4 @@ Images use Next.js optimization and responsive sizing. Content renders on the se
 theme selection and one shared animation observer provide client-side enhancements. The site uses native scrolling,
 visible keyboard focus, a skip link, and reduced-motion preferences.
 
-The opening title lasts 2.8 seconds, supports Skip/Escape/Tab, and is omitted for reduced-motion preferences. CSS dismisses it even if JavaScript fails; it never waits on network requests.
+The opening title lasts 2.2 seconds, supports Skip/Escape/Tab, and is omitted for reduced-motion preferences. CSS dismisses it even if JavaScript fails; it never waits on network requests.

@@ -23,8 +23,8 @@ export function EditorialMotion() {
           if (!entry.isIntersecting) return;
           const element = entry.target;
           const animation = element.animate(
-            [{ opacity: 0, transform: "translateY(28px)" }, { opacity: 1, transform: "translateY(0)" }],
-            { duration: 950, easing: "cubic-bezier(.22, 1, .36, 1)" },
+            [{ opacity: 0.65, transform: "translateY(16px)" }, { opacity: 1, transform: "translateY(0)" }],
+            { duration: 650, easing: "cubic-bezier(.22, 1, .36, 1)" },
           );
           animations.add(animation);
           animation.onfinish = () => animations.delete(animation);

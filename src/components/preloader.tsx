@@ -6,7 +6,6 @@ import { useCallback, useEffect, useState } from "react";
 export function Preloader() {
   const [visible, setVisible] = useState(true);
   const skip = useCallback(() => {
-    document.documentElement.dataset.intro = 'skipped';
     setVisible(false);
   }, []);
 
@@ -14,7 +13,7 @@ export function Preloader() {
     if (!visible) return;
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     const dismiss = () => setVisible(false);
-    const timer = window.setTimeout(dismiss, preference.matches ? 0 : 2800);
+    const timer = window.setTimeout(dismiss, preference.matches ? 0 : 2300);
     const onPreference = () => { if (preference.matches) dismiss(); };
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape" || event.key === "Tab") skip();
@@ -31,7 +30,9 @@ export function Preloader() {
   if (!visible) return null;
 
   return (
-    <div className="preloader">
+    <div className="preloader" onAnimationEnd={event => {
+      if (event.target === event.currentTarget) skip();
+    }}>
       <div className="intro-curtain intro-curtain-top" aria-hidden="true" />
       <div className="intro-curtain intro-curtain-bottom" aria-hidden="true" />
       <div className="intro-composition" aria-hidden="true">
