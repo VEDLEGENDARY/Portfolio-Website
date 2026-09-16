@@ -12,7 +12,7 @@ export function Projects() {
       <div className="project-grid">
         {projects.map((project, index) => (
           <article key={project.name} aria-labelledby={`project-${index}`}>
-            <div className="project-frame"><Image src={project.image} alt={project.alt} placeholder="blur" sizes="(max-width: 700px) 80vw, 40vw" /></div>
+            <div className="project-frame"><div className="project-image-well"><Image fill src={project.image} alt={project.alt} placeholder="blur" sizes="(max-width: 700px) 85vw, 42vw" /></div></div>
             <div className="project-meta"><h3 id={`project-${index}`}>{project.name}</h3><span className="project-number">0{index + 1}</span></div>
             <p className="eyebrow">{project.category}</p>
             <p className="project-description">{project.description}</p>
