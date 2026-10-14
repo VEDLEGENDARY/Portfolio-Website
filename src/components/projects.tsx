@@ -1,26 +1,36 @@
-import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
-import { projects } from "@/content/projects";
+"use client";
+import { useState } from "react";
+import Scene3D from "./scene3d";
+import type { Project } from "@/content/data";
 
-export function Projects() {
+export default function Projects({ items }: { items: Project[] }) {
+  const [open, setOpen] = useState(0);
   return (
-    <section id="projects" className="section shell" aria-labelledby="work-title">
-      <div className="section-heading">
-        <div><p className="eyebrow">Selected work</p><h2 id="work-title">Ideas, put to work.</h2></div>
-        <p className="section-note">Selected work across computer vision, language systems, full-stack products, and mobile engineering.</p>
-      </div>
-      <div className="project-grid">
-        {projects.map((project, index) => (
-          <article key={project.name} aria-labelledby={`project-${index}`}>
-            <div className="project-frame"><div className="project-image-well"><Image fill src={project.image} alt={project.alt} placeholder="blur" sizes="(max-width: 700px) 85vw, 42vw" /></div></div>
-            <div className="project-meta"><h3 id={`project-${index}`}>{project.name}</h3></div>
-            <p className="eyebrow">{project.category}</p>
-            <p className="project-description">{project.description}</p>
-            <ul className="project-tags" aria-label="Technologies">{project.tags.map(tag => <li key={tag}>{tag}</li>)}</ul>
-            <div className="project-links">{project.links.map(([label, href]) => <a key={href} className="text-link" href={href} target="_blank" rel="noreferrer" aria-label={`${project.name}: ${label} (opens in a new tab)`}>{label}<ArrowUpRight aria-hidden="true" /></a>)}</div>
-          </article>
-        ))}
-      </div>
-    </section>
+    <ul className="rows">
+      {items.map((p, i) => {
+        const on = open === i;
+        return (
+          <li key={p.name} className={on ? "row on" : "row"}>
+            <h3>
+              <button aria-expanded={on} aria-controls={`panel-${i}`} onClick={() => setOpen(on ? -1 : i)}>
+                <span className="rn">{p.name}</span>
+                <span className="rl">{p.line}</span>
+                <span className="plus" aria-hidden="true" />
+              </button>
+            </h3>
+            <div id={`panel-${i}`} className="panel" role="region" aria-label={`${p.name} details`} inert={!on}>
+              <div className="inner">
+                <div>
+                  {p.badge && <p className="badge">{p.badge}</p>}
+                  <ul className="points">{p.points.map((t) => <li key={t}>{t}</li>)}</ul>
+                  <ul className="chips">{p.stack.map((s) => <li key={s}>{s}</li>)}</ul>
+                </div>
+                <Scene3D kind={p.scene} className="art" />
+              </div>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
   );
 }

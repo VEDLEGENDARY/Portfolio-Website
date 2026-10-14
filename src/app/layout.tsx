@@ -1,26 +1,26 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Cormorant_Garamond } from "next/font/google";
-import Script from "next/script";
-import { ThemeProvider } from "@/components/theme-provider";
+import { Bricolage_Grotesque, Instrument_Sans } from "next/font/google";
 import "./globals.css";
 
-const sans = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
-const display = Cormorant_Garamond({ subsets: ["latin"], variable: "--font-display", weight: ["400", "500"], style: ["normal", "italic"], display: "swap" });
+const display = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-display", axes: ["opsz"] });
+const body = Instrument_Sans({ subsets: ["latin"], variable: "--font-body" });
 
 export const metadata: Metadata = {
-  title: "Ved Patel — Computer Science & Software Engineering",
-  description: "Computer science student at UT Dallas building production APIs, computer vision systems, retrieval tools, and autonomous robotics software.",
-  openGraph: { title: "Ved Patel — Computer Science & Software Engineering", description: "Selected work across production software, applied AI, and autonomous systems.", type: "website" },
+  title: "Ved Patel | Full-stack developer",
+  description: "Portfolio of Ved Patel: web products, AI tooling, and robotics software.",
+  openGraph: {
+    title: "Ved Patel | Full-stack developer",
+    description: "Web products, AI tooling, and robotics software.",
+    type: "website",
+  },
 };
-export const viewport: Viewport = { themeColor: "#1c1613", colorScheme: "light dark" };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export const viewport: Viewport = { themeColor: "#e9eef5" };
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="dark" className={`${sans.variable} ${display.variable}`} suppressHydrationWarning>
-      <body suppressHydrationWarning>
-        <ThemeProvider>{children}</ThemeProvider>
-        <Script src="/_vercel/insights/script.js" strategy="afterInteractive" />
-      </body>
+    <html lang="en" className={`${display.variable} ${body.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }
