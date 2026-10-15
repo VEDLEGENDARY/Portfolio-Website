@@ -1,6 +1,6 @@
 "use client";
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useEffect, useRef } from "react";
+import { Arrow } from "./icons.js";
 import { ParticleField } from "../lib/particles.js";
 import { clamp, easeInOutCubic, parseColor, watchVisibility } from "../lib/motion.js";
 import { localPoint } from "../lib/ui.js";
@@ -12,6 +12,8 @@ export default function Hero({ name, lead, main }) {
         const sec = section.current;
         const h1 = title.current;
         const cv = canvas.current;
+        if (!sec || !h1 || !cv)
+            return;
         let field = null;
         let disposed = false;
         const cleanups = [];
@@ -28,7 +30,15 @@ export default function Hero({ name, lead, main }) {
                 family,
                 weight: 400,
                 fit: 0.88,
-                maxBlock: 0.56,
+                maxBlock: 0.92,
+                insets: () => {
+                    const navSize = css.getPropertyValue("--nav-h").trim();
+                    const navHeight = Number.parseFloat(navSize) * (navSize.endsWith("rem") ? Number.parseFloat(css.fontSize) : 1);
+                    return {
+                        top: (Number.isFinite(navHeight) ? navHeight : document.querySelector(".nav")?.offsetHeight ?? 0) + 18,
+                        bottom: (sec.querySelector(".hero-foot")?.offsetHeight ?? 0) + 26,
+                    };
+                },
                 ink,
                 signal,
                 focus: 92,
@@ -83,5 +93,14 @@ export default function Hero({ name, lead, main }) {
             field?.dispose();
         };
     }, [name]);
-    return (_jsxs("section", { ref: section, id: "top", className: "hero", "data-section": "top", "aria-labelledby": "hero-title", children: [_jsx("div", { className: "hero-stage", children: _jsx("canvas", { ref: canvas, "aria-hidden": "true" }) }), _jsx("h1", { ref: title, id: "hero-title", className: "hero-title", children: name }), _jsx("div", { className: "hero-foot", children: _jsxs("p", { className: "hero-lead", children: [lead, " ", _jsx("span", { children: main })] }) })] }));
+    return (
+        <section ref={section} id="top" className="hero" data-section="top" aria-labelledby="hero-title">
+            <div className="hero-stage"><canvas ref={canvas} aria-hidden="true" /></div>
+            <h1 ref={title} id="hero-title" className="hero-title">{name}</h1>
+            <div className="hero-foot">
+                <p className="hero-lead">{lead}{" "}<span>{main}</span></p>
+                <a href="#work" className="hero-explore"><span className="round-arrow"><Arrow direction="down" /></span><span>Explore the work</span></a>
+            </div>
+        </section>
+    );
 }

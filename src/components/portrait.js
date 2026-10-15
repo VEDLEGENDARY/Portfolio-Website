@@ -1,5 +1,5 @@
 "use client";
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { Halftone } from "../lib/halftone.js";
 import { loadImage, parseColor, watchVisibility } from "../lib/motion.js";
@@ -64,5 +64,17 @@ export default function Portrait({ src, alt }) {
             ht?.dispose();
         };
     }, [src]);
-    return (_jsxs("div", { ref: box, className: "portrait", children: [_jsx("svg", { width: 0, height: 0, "aria-hidden": true, style: { position: "absolute" }, children: _jsx("defs", { children: _jsx("filter", { id: "portrait-cool", colorInterpolationFilters: "sRGB", children: _jsx("feColorMatrix", { type: "matrix", values: "0.97 0 0 0 0  0 1 0 0 0  0 0 1.035 0 0.003  0 0 0 1 0" }) }) }) }), _jsx("img", { src: src, alt: alt, width: 1000, height: 1000, loading: "lazy", decoding: "async" }), _jsx("canvas", { ref: canvas, "aria-hidden": "true" })] }));
+    return (
+        <div ref={box} className="portrait">
+            <svg width={0} height={0} aria-hidden="true" style={{ position: "absolute" }}>
+                <defs>
+                    <filter id="portrait-cool" colorInterpolationFilters="sRGB">
+                        <feColorMatrix type="matrix" values="0.97 0 0 0 0  0 1 0 0 0  0 0 1.035 0 0.003  0 0 0 1 0" />
+                    </filter>
+                </defs>
+            </svg>
+            <Image src={src} alt={alt} width={1000} height={1000} sizes="(max-width: 960px) 90vw, 40vw" />
+            <canvas ref={canvas} aria-hidden="true" />
+        </div>
+    );
 }

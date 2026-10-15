@@ -296,7 +296,7 @@ export class Network {
                 const on = near(i);
                 if (compact && node.kind === "tech" && !(active && on))
                     continue;
-                const size = node.kind === "group" ? (compact ? 16 : 21) : node.kind === "project" ? (compact ? 15 : 19) : (compact ? 10 : 11);
+                const size = node.kind === "group" ? (compact ? 16 : 21) : node.kind === "project" ? (compact ? 15 : 19) : 12;
                 ctx.font = `${node.kind === "group" ? "italic " : ""}${size}px ${node.kind === "tech" ? c.mono : c.serif}`;
                 const width = ctx.measureText(node.label).width + 10;
                 const height = size * 1.25 + 6;

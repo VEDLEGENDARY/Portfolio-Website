@@ -1,5 +1,4 @@
 "use client";
-import { jsx as _jsx } from "react/jsx-runtime";
 import { useEffect, useRef } from "react";
 import { mountClock, mountCounters, mountCursor, mountMagnetic, mountMarquee, mountReveal, mountScroll, mountSectionSpy } from "../lib/ui.js";
 /** Mounts the page-wide behaviours: scroll effects, reveals, counters, clock and cursor. */
@@ -19,5 +18,5 @@ export default function Enhance({ timezone }) {
         ];
         return () => cleanups.forEach((fn) => fn());
     }, [timezone]);
-    return (_jsx("div", { ref: cursor, className: "cursor", "aria-hidden": "true" }));
+    return <div ref={cursor} className="cursor" aria-hidden="true" />;
 }

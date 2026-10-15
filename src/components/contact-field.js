@@ -1,5 +1,4 @@
 "use client";
-import { jsx as _jsx } from "react/jsx-runtime";
 import { useEffect, useRef } from "react";
 import { Contours } from "../lib/contours.js";
 import { parseColor, watchVisibility } from "../lib/motion.js";
@@ -27,5 +26,5 @@ export default function ContactField() {
             field?.dispose();
         };
     }, []);
-    return _jsx("canvas", { ref: canvas, className: "contact-field", "aria-hidden": "true" });
+    return <canvas ref={canvas} className="contact-field" aria-hidden="true" />;
 }

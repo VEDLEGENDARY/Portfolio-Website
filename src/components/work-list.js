@@ -1,10 +1,10 @@
 "use client";
-import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { PreviewStage } from "../lib/preview-stage.js";
 import { drawCover } from "../lib/covers.js";
 import { hasFinePointer, loadImage, watchVisibility } from "../lib/motion.js";
-export default function WorkList({ items }) {
+export default function WorkList({ items, offset = 0 }) {
     const list = useRef(null);
     const stageEl = useRef(null);
     useEffect(() => {
@@ -129,5 +129,40 @@ export default function WorkList({ items }) {
         });
         return () => cleanups.forEach((fn) => fn());
     }, [items]);
-    return (_jsxs(_Fragment, { children: [_jsx("ol", { ref: list, className: "rows", children: items.map((p, i) => (_jsxs("li", { className: "row", children: [_jsx("h3", { children: _jsxs("button", { type: "button", "aria-expanded": "false", "aria-controls": `panel-${p.slug}`, children: [_jsx("span", { className: "row-i mono", children: String(i + 1).padStart(2, "0") }), _jsx("span", { className: "row-name", children: p.name }), _jsx("span", { className: "row-line", children: p.line }), _jsx("span", { className: "row-plus", "aria-hidden": "true" })] }) }), _jsx("div", { id: `panel-${p.slug}`, className: "panel", role: "region", "aria-label": `${p.name} details`, inert: true, children: _jsxs("div", { className: "panel-in", children: [_jsx("figure", { className: "cover", children: p.cover.kind === "image" ? (_jsx("img", { src: p.cover.src, alt: p.cover.alt, width: 1200, height: 800, loading: "lazy", decoding: "async" })) : (_jsx("canvas", { "data-art": p.cover.art, width: 1200, height: 800, role: "img", "aria-label": p.cover.alt })) }), _jsxs("div", { className: "detail", children: [p.badge && _jsx("p", { className: "badge mono", children: p.badge }), _jsx("ul", { className: "points", children: p.points.map((t) => (_jsx("li", { children: t }, t))) }), _jsx("ul", { className: "chips", children: p.stack.map((s) => (_jsx("li", { children: s }, s))) }), p.href && (_jsx("a", { className: "link-arrow", href: p.href, target: "_blank", rel: "noopener noreferrer", children: "Visit project" }))] })] }) })] }, p.slug))) }), _jsx("canvas", { ref: stageEl, className: "stage", "aria-hidden": "true" })] }));
+    return (
+        <>
+            <ol ref={list} className="rows" start={offset + 1}>
+                {items.map((project, index) => (
+                    <li className="row" key={project.slug}>
+                        <h3>
+                            <button type="button" aria-expanded="false" aria-controls={`panel-${project.slug}`}>
+                                <span className="row-i mono">{String(index + offset + 1).padStart(2, "0")}</span>
+                                <span className="row-name">{project.name}</span>
+                                <span className="row-line">{project.line}</span>
+                                <span className="row-plus" aria-hidden="true" />
+                            </button>
+                        </h3>
+                        <div id={`panel-${project.slug}`} className="panel" role="region" aria-label={`${project.name} details`} inert>
+                            <div className="panel-in">
+                                <figure className="cover">
+                                    {project.cover.kind === "image" ? (
+                                        <Image src={project.cover.src} alt={project.cover.alt} width={1200} height={800} sizes="(max-width: 960px) 90vw, 55vw" />
+                                    ) : (
+                                        <canvas data-art={project.cover.art} width={1200} height={800} role="img" aria-label={project.cover.alt} />
+                                    )}
+                                </figure>
+                                <div className="detail">
+                                    {project.badge && <p className="badge mono">{project.badge}</p>}
+                                    <ul className="points">{project.points.map((point) => <li key={point}>{point}</li>)}</ul>
+                                    <ul className="chips">{project.stack.map((skill) => <li key={skill}>{skill}</li>)}</ul>
+                                    {project.href && <a className="link-arrow" href={project.href} target="_blank" rel="noopener noreferrer">Visit project</a>}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                ))}
+            </ol>
+            <canvas ref={stageEl} className="stage" aria-hidden="true" />
+        </>
+    );
 }

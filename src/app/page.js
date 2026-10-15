@@ -1,19 +1,163 @@
-import { jsxs as _jsxs, Fragment as _Fragment, jsx as _jsx } from "react/jsx-runtime";
 import Hero from "../components/hero.js";
 import Enhance from "../components/enhance.js";
 import WorkList from "../components/work-list.js";
+import FeaturedProjects from "../components/featured-projects.js";
 import Portrait from "../components/portrait.js";
 import Marquee from "../components/marquee.js";
 import ResumeButton from "../components/resume-button.js";
 import StackNetwork from "../components/stack-network.js";
 import ContactField from "../components/contact-field.js";
+import { Arrow, BrandMark } from "../components/icons.js";
 import { profile, statement, stats, highlights, projects, experience, skillGroups, education } from "../content/data.js";
+
 function Words({ text }) {
-    return (_jsx(_Fragment, { children: text.split(" ").map((w, i) => (_jsxs("span", { className: "w", children: [w, " "] }, i))) }));
+  return text.split(" ").map((word, index) => <span className="w" key={index}>{word}{" "}</span>);
 }
-function Head({ index, title, aside }) {
-    return (_jsxs("header", { className: "sec-head", "data-reveal": true, children: [_jsx("p", { className: "mono", children: index }), _jsx("h2", { children: title }), aside && _jsx("p", { className: "sec-aside", children: aside })] }));
+
+function Head({ id, index, title, aside }) {
+  return (
+    <header className="sec-head" data-reveal>
+      <p className="mono">{index}</p>
+      <h2 id={id}>{title}</h2>
+      {aside && <p className="sec-aside">{aside}</p>}
+    </header>
+  );
 }
+
 export default function Home() {
-    return (_jsxs(_Fragment, { children: [_jsx("a", { className: "skip", href: "#work", children: "Skip to work" }), _jsxs("header", { className: "nav", children: [_jsx("div", { className: "nav-glass", "aria-hidden": true, children: Array.from({ length: 3 }, (_, i) => _jsx("i", {}, i)) }), _jsx("a", { className: "nav-mark", href: "#top", "aria-label": "Ved Patel, back to top", children: "Ved Patel" }), _jsxs("nav", { "data-nav": true, "aria-label": "Sections", children: [_jsx("a", { href: "#work", children: "Work" }), _jsx("a", { href: "#about", children: "About" }), _jsx("a", { href: "#experience", children: "Experience" }), _jsx("a", { href: "#contact", children: "Contact" })] }), _jsxs("p", { className: "nav-clock mono", children: [_jsx("span", { children: profile.location }), " ", _jsx("span", { "data-clock": true })] })] }), _jsxs("main", { children: [_jsx(Hero, { name: profile.name, lead: profile.lead, main: profile.main }), _jsxs("section", { className: "statement", "data-section": "statement", "aria-label": "Introduction", children: [_jsx("p", { className: "statement-text", "data-scrub": true, children: _jsx(Words, { text: statement }) }), _jsx("dl", { className: "stats", children: stats.map((s, i) => (_jsxs("div", { "data-reveal": true, style: { ["--d"]: `${i * 80}ms` }, children: [_jsx("dt", { children: s.label }), _jsx("dd", { children: _jsxs("span", { "data-count": s.value, "data-decimals": s.decimals ?? 0, "data-suffix": s.suffix ?? "", children: [s.value.toFixed(s.decimals ?? 0), s.suffix ?? ""] }) }), _jsx("p", { children: s.detail })] }, s.label))) })] }), _jsxs("section", { id: "work", className: "work dark sheet", "data-section": "work", children: [_jsx(Head, { index: "01", title: _jsxs(_Fragment, { children: ["Selected ", _jsx("em", { children: "work" })] }), aside: `${projects.length} projects. Hover to preview, select to open.` }), _jsx(WorkList, { items: projects })] }), _jsxs("section", { id: "about", className: "about", "data-section": "about", children: [_jsx(Head, { index: "02", title: _jsxs(_Fragment, { children: ["Student, ", _jsx("em", { children: "engineer" })] }) }), _jsxs("div", { className: "about-grid", children: [_jsx("div", { className: "about-media", "data-reveal": true, children: _jsx(Portrait, { src: "/about/portrait.jpg", alt: "Portrait of Ved Patel in a navy suit" }) }), _jsxs("div", { className: "about-body", children: [_jsxs("dl", { className: "facts", "data-reveal": true, children: [_jsxs("div", { children: [_jsx("dt", { children: "School" }), _jsx("dd", { children: education.school })] }), _jsxs("div", { children: [_jsx("dt", { children: "Degree" }), _jsx("dd", { children: education.degree })] }), _jsxs("div", { children: [_jsx("dt", { children: "Minors" }), _jsx("dd", { children: education.minors.join(", ") })] }), _jsxs("div", { children: [_jsx("dt", { children: "Coursework" }), _jsx("dd", { children: education.coursework.join(", ") })] }), _jsxs("div", { children: [_jsx("dt", { children: "Certificates" }), _jsx("dd", { children: education.certs.join(", ") })] }), _jsxs("div", { children: [_jsx("dt", { children: "Based in" }), _jsx("dd", { children: profile.location })] })] }), _jsx("h3", { className: "mini", "data-reveal": true, children: "Recognition" }), _jsx("ul", { className: "awards", "data-reveal": true, children: highlights.map((h) => (_jsxs("li", { children: [_jsx("strong", { children: h.title }), _jsx("span", { children: h.detail })] }, h.title))) })] })] })] }), _jsx(Marquee, { items: skillGroups.flatMap((g) => g.items) }), _jsxs("section", { id: "stack", className: "stack dark sheet", "data-section": "stack", children: [_jsx(Head, { index: "03", title: _jsxs(_Fragment, { children: ["What I build ", _jsx("em", { children: "with" })] }), aside: "Every dot is a technology. Hover one to trace the projects and skill areas it connects to." }), _jsx(StackNetwork, { projects: projects.map((p) => ({ name: p.name, stack: p.stack })), groups: skillGroups.map((g) => ({ name: g.name, items: g.items })) }), _jsx("ul", { className: "sr-only", children: skillGroups.map((g) => (_jsxs("li", { children: [g.name, ": ", g.items.join(", "), ". Used in ", g.used, "."] }, g.name))) })] }), _jsxs("section", { id: "experience", className: "experience", "data-section": "experience", children: [_jsx(Head, { index: "04", title: _jsxs(_Fragment, { children: ["Where the work ", _jsx("em", { children: "happened" })] }) }), _jsx("ol", { className: "timeline", "data-progress": true, children: experience.map((e) => (_jsxs("li", { "data-reveal": true, children: [_jsx("p", { className: "when mono", children: e.when }), _jsxs("div", { children: [_jsx("h3", { children: e.org }), _jsx("p", { className: "role", children: e.role }), _jsx("ul", { className: "points", children: e.points.map((t) => (_jsx("li", { children: t }, t))) })] })] }, e.org))) })] }), _jsxs("section", { id: "contact", className: "contact dark sheet", "data-section": "contact", children: [_jsx(ContactField, {}), _jsx("p", { className: "mono", "data-reveal": true, children: "05 / Contact" }), _jsxs("h2", { "data-reveal": true, children: ["Let's build ", _jsx("em", { children: "something." })] }), _jsx("p", { className: "contact-lead", "data-reveal": true, children: "Have a project in mind? I reply within a few days." }), _jsxs("div", { className: "actions", "data-reveal": true, children: [_jsx("a", { className: "btn solid", href: `mailto:${profile.email}`, children: profile.email }), _jsx("a", { className: "btn", href: profile.github, target: "_blank", rel: "noopener noreferrer", children: "GitHub" }), _jsx(ResumeButton, { href: profile.resume })] }), _jsxs("footer", { className: "foot", children: [_jsxs("p", { className: "mono", children: [profile.name, " \u00B7 ", profile.location, " \u00B7 ", _jsx("span", { "data-clock": true })] }), _jsx("a", { className: "mono", href: "#top", children: "Back to top \u2191" })] })] })] }), _jsx(Enhance, { timezone: profile.timezone })] }));
+  return (
+    <>
+      <a className="skip" href="#work">Skip to work</a>
+      <header className="nav">
+        <div className="nav-glass" aria-hidden="true">
+          {Array.from({ length: 3 }, (_, index) => <i key={index} />)}
+        </div>
+        <a className="nav-mark" href="#top" aria-label="Ved Patel, back to top">
+          <BrandMark /><span>Ved Patel</span>
+        </a>
+        <nav data-nav aria-label="Sections">
+          <a href="#work">Work</a>
+          <a href="#about">About</a>
+          <a href="#experience">Experience</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <p className="nav-clock mono"><span>{profile.location}</span>{" "}<span data-clock /></p>
+      </header>
+
+      <main>
+        <Hero name={profile.name} lead={profile.lead} main={profile.main} />
+
+        <section className="statement" data-section="statement" aria-labelledby="introduction-title">
+          <h2 id="introduction-title" className="sr-only">Introduction</h2>
+          <p className="statement-text" data-scrub><Words text={statement} /></p>
+          <dl className="stats">
+            {stats.map((stat, index) => (
+              <div data-reveal style={{ "--d": `${index * 80}ms` }} key={stat.label}>
+                <dt>{stat.label}</dt>
+                <dd className="stat-value">
+                  <span data-count={stat.value} data-decimals={stat.decimals ?? 0} data-suffix={stat.suffix ?? ""}>
+                    {stat.value.toFixed(stat.decimals ?? 0)}{stat.suffix ?? ""}
+                  </span>
+                </dd>
+                <dd className="stat-detail">{stat.detail}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        <section id="work" className="work dark sheet" data-section="work" aria-labelledby="work-title">
+          <Head id="work-title" index="01" title={<>Selected <em>work</em></>} aside={`${projects.length} projects. Hover to preview, select to open.`} />
+          <FeaturedProjects items={projects.slice(0, 2)} />
+          <WorkList items={projects.slice(2)} offset={2} />
+        </section>
+
+        <section id="about" className="about" data-section="about" aria-labelledby="about-title">
+          <Head id="about-title" index="02" title={<>Student, <em>engineer</em></>} />
+          <div className="about-grid">
+            <div className="about-media" data-reveal>
+              <div className="portrait-frame">
+                <Portrait src="/about/portrait.jpg" alt="Portrait of Ved Patel in a navy suit" />
+              </div>
+            </div>
+            <div className="about-body">
+              <dl className="facts" data-reveal>
+                <div><dt>Education</dt><dd>{education.school}<span className="fact-secondary">{education.degree}</span></dd></div>
+                <div><dt>Minors</dt><dd>{education.minors.join(" · ")}</dd></div>
+                <div><dt>Coursework</dt><dd>{education.coursework.join(" · ")}</dd></div>
+                <div>
+                  <dt>Certificates</dt>
+                  <dd>{education.certs.map((certificate) => (
+                    <span className="certificate" key={certificate}>{certificate}<span className="certificate-mark" aria-hidden="true">✓</span></span>
+                  ))}</dd>
+                </div>
+                <div><dt>Based in</dt><dd>{profile.location}</dd></div>
+              </dl>
+            </div>
+          </div>
+          <div className="recognition">
+            <h3 data-reveal>Recognition</h3>
+            <ul className="awards">
+              {highlights.map((highlight) => (
+                <li key={highlight.title} data-reveal><strong>{highlight.title}</strong><span>{highlight.detail}</span></li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <Marquee items={skillGroups.flatMap((group) => group.items)} />
+
+        <section id="stack" className="stack dark sheet" data-section="stack" aria-labelledby="stack-title">
+          <Head id="stack-title" index="03" title={<>What I build <em>with</em></>} aside="Every dot is a technology. Hover one to trace the projects and skill areas it connects to." />
+          <StackNetwork projects={projects.map((project) => ({ name: project.name, stack: project.stack }))} groups={skillGroups.map((group) => ({ name: group.name, items: group.items }))} />
+          <ul className="network-key mono" aria-label="Network legend">
+            <li><i className="key-project" aria-hidden="true" />Project</li>
+            <li><i className="key-group" aria-hidden="true" />Skill area</li>
+            <li><i className="key-tech" aria-hidden="true" />Technology</li>
+          </ul>
+          <ul className="sr-only">
+            {skillGroups.map((group) => <li key={group.name}>{group.name}: {group.items.join(", ")}. Used in {group.used}.</li>)}
+          </ul>
+        </section>
+
+        <section id="experience" className="experience" data-section="experience" aria-labelledby="experience-title">
+          <Head id="experience-title" index="04" title={<>Where the work <em>happened</em></>} />
+          <ol className="timeline" data-progress>
+            {experience.map((entry) => (
+              <li key={entry.org} data-reveal>
+                <p className="when mono">{entry.when}</p>
+                <div>
+                  <h3>{entry.org}</h3>
+                  <p className="role">{entry.role}</p>
+                  <ul className="points">{entry.points.map((point) => <li key={point}>{point}</li>)}</ul>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section id="contact" className="contact dark sheet" data-section="contact" aria-labelledby="contact-title">
+          <ContactField />
+          <p className="mono" data-reveal>05 / Contact</p>
+          <div className="contact-heading">
+            <h2 id="contact-title" data-reveal>Let&apos;s build<br /><em>something.</em></h2>
+            <Arrow className="contact-arrow" />
+          </div>
+          <p className="contact-lead" data-reveal>Have a project in mind? I reply within a few days.</p>
+          <div className="contact-bottom" data-reveal>
+            <a className="contact-email" href={`mailto:${profile.email}`}>{profile.email}<Arrow /></a>
+            <div className="actions">
+              <a className="btn" href={profile.github} target="_blank" rel="noopener noreferrer">GitHub <Arrow /></a>
+              <ResumeButton href={profile.resume} />
+            </div>
+          </div>
+          <footer className="foot">
+            <a className="footer-brand" href="#top" aria-label="Ved Patel, back to top"><BrandMark /><span>Ved Patel</span></a>
+            <p className="mono">{profile.location}<span data-clock /></p>
+            <a className="back-top mono" href="#top">Back to top <Arrow /></a>
+          </footer>
+        </section>
+      </main>
+      <Enhance timezone={profile.timezone} />
+    </>
+  );
 }

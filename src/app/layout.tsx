@@ -7,12 +7,12 @@ const sans = Geist({ subsets: ["latin"], variable: "--font-sans" });
 const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
-  title: "Ved Patel — Portfolio",
+  title: "Ved Patel | Portfolio",
   description: "Portfolio of Ved Patel: web products, AI tooling, and robotics software.",
   applicationName: "Ved Patel Portfolio",
-  openGraph: { title: "Ved Patel — Portfolio", description: "Web products, AI tooling, and robotics software.", type: "website" },
+  openGraph: { title: "Ved Patel | Portfolio", description: "Web products, AI tooling, and robotics software.", type: "website" },
 };
-export const viewport: Viewport = { themeColor: "#e6e3d9" };
+export const viewport: Viewport = { themeColor: "#eeebe3" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

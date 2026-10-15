@@ -1,5 +1,4 @@
 "use client";
-import { jsx as _jsx } from "react/jsx-runtime";
 import { useEffect, useRef } from "react";
 import { Network } from "../lib/network.js";
 import { watchVisibility } from "../lib/motion.js";
@@ -49,5 +48,9 @@ export default function StackNetwork({ projects, groups }) {
             net?.dispose();
         };
     }, [projects, groups]);
-    return (_jsx("div", { className: "network", children: _jsx("canvas", { ref: canvas, role: "img", "aria-label": "Network linking each project and skill area to the technologies it uses" }) }));
+    return (
+        <div className="network">
+            <canvas ref={canvas} role="img" aria-label="Network linking each project and skill area to the technologies it uses" />
+        </div>
+    );
 }
