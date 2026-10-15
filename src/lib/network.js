@@ -43,16 +43,22 @@ export class Network {
         this.dpr = 1;
         this.alpha = 1;
         this.hover = -1;
+        this.labels = [];
+        this.labelKey = null;
+        this.time = 0;
+        this.last = 0;
         this.ptr = { x: -9999, y: -9999, active: false };
         this.raf = 0;
         this.running = false;
         this.visible = true;
         this.reduce = prefersReducedMotion();
-        this.tick = () => {
+        this.tick = (now) => {
             if (!this.running)
                 return;
             this.raf = requestAnimationFrame(this.tick);
-            this.step();
+            const dt = Math.min(0.05, (now - this.last) / 1000 || 1 / 60);
+            this.last = now;
+            this.step(dt);
             this.draw();
         };
         this.ctx = canvas.getContext("2d");
@@ -76,6 +82,7 @@ export class Network {
             return;
         }
         this.running = true;
+        this.last = performance.now();
         this.raf = requestAnimationFrame(this.tick);
     }
     setVisible(v) {
@@ -100,7 +107,7 @@ export class Network {
         this.ptr.y = y;
         this.ptr.active = true;
         let best = -1;
-        let bd = 30 * 30;
+        let bd = 38 * 38;
         this.nodes.forEach((n, i) => {
             const d = (n.x - x) ** 2 + (n.y - y) ** 2;
             if (d < bd) {
@@ -108,6 +115,15 @@ export class Network {
                 best = i;
             }
         });
+        // Label hit areas and a little hysteresis make connections easy to inspect.
+        const label = this.labels.find((box) => x >= box.x && x <= box.x + box.w && y >= box.y && y <= box.y + box.h);
+        if (label)
+            best = label.index;
+        else if (best < 0 && this.hover >= 0) {
+            const current = this.nodes[this.hover];
+            if (Math.hypot(current.x - x, current.y - y) < 52)
+                best = this.hover;
+        }
         this.hover = best;
         this.canvas.style.cursor = best >= 0 ? "pointer" : "";
         if (this.reduce)
@@ -123,6 +139,8 @@ export class Network {
         const w = Math.max(1, this.canvas.clientWidth);
         const h = Math.max(1, this.canvas.clientHeight);
         if (w < 8 || h < 8)
+            return;
+        if (!first && w === this.w && h === this.h && dpr === this.dpr)
             return;
         this.dpr = dpr;
         this.canvas.width = Math.round(w * dpr);
@@ -145,13 +163,40 @@ export class Network {
         this.w = w;
         this.h = h;
         this.alpha = 1;
-        if (this.reduce) {
-            for (let i = 0; i < 400; i++)
-                this.step();
-            this.draw();
+        // Settle once before displaying the graph, then anchor it in place.
+        this.ptr.active = false;
+        this.hover = -1;
+        for (let i = 0; i < 480; i++)
+            this.settleStep();
+        const minY = Math.min(...this.nodes.map((node) => node.y));
+        const maxY = Math.max(...this.nodes.map((node) => node.y));
+        this.nodes.forEach((node) => {
+            // Use the enlarged drawing area instead of leaving it empty above
+            // and below a tightly clustered simulation.
+            node.y = 42 + (node.y - minY) / Math.max(1, maxY - minY) * (h - 84);
+            node.ax = node.x;
+            node.ay = node.y;
+            node.vx = node.vy = 0;
+        });
+        this.labelKey = null;
+        this.draw();
+    }
+    step(dt = 1 / 60) {
+        this.time += dt;
+        const follow = 1 - Math.exp(-8 * dt);
+        for (let i = 0; i < this.nodes.length; i++) {
+            const node = this.nodes[i];
+            let dx = this.reduce ? 0 : Math.sin(this.time * 0.7 + i * 2.4) * 0.9;
+            let dy = this.reduce ? 0 : Math.cos(this.time * 0.6 + i * 1.7) * 0.75;
+            if (i === this.hover && this.ptr.active && !this.reduce && Math.hypot(this.ptr.x - node.ax, this.ptr.y - node.ay) < 64) {
+                dx = clamp((this.ptr.x - node.ax) * 0.22, -6, 6);
+                dy = clamp((this.ptr.y - node.ay) * 0.22, -6, 6);
+            }
+            node.x += (node.ax + dx - node.x) * follow;
+            node.y += (node.ay + dy - node.y) * follow;
         }
     }
-    step() {
+    settleStep() {
         const { nodes, links, w, h } = this;
         const n = nodes.length;
         const scale = clamp(Math.min(w / 1000, h / 640), 0.3, 1.2);
@@ -194,20 +239,9 @@ export class Network {
             q.vx -= (dx / d) * f;
             q.vy -= (dy / d) * f;
         }
-        const R = 110;
         for (const p of nodes) {
             p.vx += (w / 2 - p.x) * 0.0007;
             p.vy += (h / 2 - p.y) * 0.0026;
-            if (this.ptr.active) {
-                const dx = p.x - this.ptr.x;
-                const dy = p.y - this.ptr.y;
-                const d = Math.hypot(dx, dy);
-                if (d < R && d > 0.1) {
-                    const f = (1 - d / R) * 1.6;
-                    p.vx += (dx / d) * f;
-                    p.vy += (dy / d) * f;
-                }
-            }
             p.vx *= 0.82;
             p.vy *= 0.82;
             p.x = clamp(p.x + p.vx, 24, w - 24);
@@ -252,33 +286,66 @@ export class Network {
             }
         });
         const compact = this.w < 640;
-        nodes.forEach((n, i) => {
+        const labelKey = `${hover}:${this.w}:${this.h}`;
+        if (this.labelKey !== labelKey) {
+            this.labels = [];
+            const priority = (i) => i === hover ? 0 : active && near(i) ? 1 : nodes[i].kind === "group" ? 2 : nodes[i].kind === "project" ? 3 : 4;
+            const order = nodes.map((_, i) => i).sort((a, b) => priority(a) - priority(b));
+            for (const i of order) {
+                const node = nodes[i];
+                const on = near(i);
+                if (compact && node.kind === "tech" && !(active && on))
+                    continue;
+                const size = node.kind === "group" ? (compact ? 16 : 21) : node.kind === "project" ? (compact ? 15 : 19) : (compact ? 10 : 11);
+                ctx.font = `${node.kind === "group" ? "italic " : ""}${size}px ${node.kind === "tech" ? c.mono : c.serif}`;
+                const width = ctx.measureText(node.label).width + 10;
+                const height = size * 1.25 + 6;
+                const off = node.r + 9;
+                const x = node.ax;
+                const y = node.ay;
+                const candidates = [];
+                for (const shift of [0, -20, 20, -40, 40, -64, 64, -90, 90]) {
+                    candidates.push([x + off, y - height / 2 + shift]);
+                    candidates.push([x - off - width, y - height / 2 + shift]);
+                    candidates.push([x - width / 2, y - off - height + shift]);
+                    candidates.push([x - width / 2, y + off + shift]);
+                }
+                const fits = (box) => box.x >= 4 && box.y >= 4 && box.x + box.w <= this.w - 4 && box.y + box.h <= this.h - 4 &&
+                    !this.labels.some((b) => box.x < b.x + b.w + 5 && box.x + box.w + 5 > b.x && box.y < b.y + b.h + 4 && box.y + box.h + 4 > b.y) &&
+                    !nodes.some((n) => n.ax + n.r + 8 > box.x && n.ax - n.r - 8 < box.x + box.w && n.ay + n.r + 8 > box.y && n.ay - n.r - 8 < box.y + box.h);
+                let box = candidates.map(([x, y]) => ({ x, y, w: width, h: height, index: i })).find(fits);
+                if (!box && i === hover) {
+                    // Reserve a readable location for the selected label even in
+                    // a dense mobile cluster. Colour identifies its selected node.
+                    const open = [];
+                    for (let y = 6; y + height <= this.h - 6; y += 12)
+                        for (let x = 6; x + width <= this.w - 6; x += 12) {
+                            const candidate = { x, y, w: width, h: height, index: i };
+                            if (fits(candidate)) open.push(candidate);
+                        }
+                    open.sort((a, b) => Math.hypot(a.x + width / 2 - node.x, a.y + height / 2 - node.y) - Math.hypot(b.x + width / 2 - node.x, b.y + height / 2 - node.y));
+                    box = open[0];
+                }
+                // Omit a crowded peripheral label instead of ever drawing over text.
+                if (!box)
+                    continue;
+                this.labels.push({ ...box, font: ctx.font });
+            }
+            this.labelKey = labelKey;
+        }
+        for (const box of this.labels) {
+            const i = box.index;
+            const node = nodes[i];
             const on = near(i);
-            if (n.kind === "tech") {
-                // On small screens only hub labels stay visible; a touched node reveals its neighbours.
-                if (compact && !(active && on))
-                    return;
-                ctx.font = `${compact ? 10 : 11}px ${c.mono}`;
-                ctx.fillStyle = c.paper;
-                ctx.globalAlpha = on ? (active ? 0.95 : 0.55) : 0.08;
-            }
-            else if (n.kind === "group") {
-                ctx.font = `italic ${compact ? 16 : 21}px ${c.serif}`;
-                ctx.fillStyle = c.paper;
-                ctx.globalAlpha = on ? 1 : 0.12;
-            }
-            else {
-                ctx.font = `${compact ? 15 : 19}px ${c.serif}`;
-                ctx.fillStyle = c.signal;
-                ctx.globalAlpha = on ? 1 : 0.14;
-            }
-            const off = n.r + 7;
-            const tw = ctx.measureText(n.label).width;
-            const flip = n.x + off + tw > this.w - 6 && n.x - off - tw > 4;
+            ctx.font = box.font;
+            ctx.globalAlpha = on ? (node.kind === "tech" && !active ? 0.66 : 1) : 0.12;
+            ctx.fillStyle = c.ink;
+            ctx.fillRect(box.x, box.y, box.w, box.h);
+            ctx.fillStyle = node.kind === "project" || i === hover ? c.signal : c.paper;
             ctx.textBaseline = "middle";
-            ctx.textAlign = flip ? "right" : "left";
-            ctx.fillText(n.label, n.x + (flip ? -off : off), n.y - (n.kind === "tech" ? 0 : 1));
-        });
+            ctx.textAlign = "left";
+            ctx.fillText(node.label, box.x + 5, box.y + box.h / 2);
+        }
         ctx.globalAlpha = 1;
     }
 }

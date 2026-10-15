@@ -32,7 +32,7 @@ void main(){
   float f = fbm(q + w * .6) + lift;
   float line = 1. - smoothstep(0., .055, abs(fract(f * 7.) - .5));
   float band = .3 + .7 * smoothstep(.15, .85, fbm(q * .5 + 9.));
-  float a = line * band * .4;
+  float a = line * band * .529;
   gl_FragColor = vec4(uLine * a, a);
 }`;
 const UNIFORMS = ["uRes", "uPtr", "uTime", "uLine"];

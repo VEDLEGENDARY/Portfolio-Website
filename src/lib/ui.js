@@ -13,8 +13,10 @@ export function mountScroll() {
         const vh = window.innerHeight;
         const max = root().scrollHeight - vh;
         root().style.setProperty("--scroll", String(max > 0 ? clamp(window.scrollY / max) : 0));
-        const under = document.elementsFromPoint(window.innerWidth / 2, 30).find((n) => !n.closest(".nav"));
+        const navHeight = document.querySelector(".nav")?.getBoundingClientRect().height ?? 76.8;
+        const under = document.elementsFromPoint(window.innerWidth / 2, navHeight / 2).find((n) => !n.closest(".nav"));
         root().dataset.navtone = under?.closest(".dark") ? "dark" : "light";
+        root().style.setProperty("--nav-density", String(0.76 + 0.18 * clamp(window.scrollY / vh)));
         document.querySelectorAll("[data-scrub]").forEach((el) => {
             const words = el.querySelectorAll(".w");
             if (!words.length)
@@ -31,13 +33,16 @@ export function mountScroll() {
                 w.style.opacity = String(0.16 + 0.84 * easeOutCubic(v));
             });
         });
-        document.querySelectorAll(".timeline > li").forEach((li) => {
-            li.classList.toggle("reached", reduce || li.getBoundingClientRect().top < vh * 0.66);
-        });
         document.querySelectorAll("[data-progress]").forEach((el) => {
             const r = el.getBoundingClientRect();
-            const p = clamp((vh * 0.62 - r.top) / r.height);
-            el.style.setProperty("--p", reduce ? "1" : p.toFixed(4));
+            const travelled = clamp(vh * 0.62 - r.top, 0, r.height);
+            el.style.setProperty("--p", String(travelled / Math.max(1, r.height)));
+            el.querySelectorAll(":scope > li").forEach((li) => {
+                const dot = getComputedStyle(li, "::before");
+                // Use the actual marker centre and the exact same line endpoint.
+                const marker = li.getBoundingClientRect().top - r.top + parseFloat(dot.top) + parseFloat(dot.height) / 2;
+                li.classList.toggle("reached", travelled >= marker);
+            });
         });
     };
     const request = () => {
@@ -113,28 +118,45 @@ export function mountCounters() {
         io.disconnect();
     };
 }
-/** Marks the section nearest the middle of the screen, for the nav and for theming. */
+/** Uses the nav's actual lower edge for both anchor alignment and active links. */
 export function mountSectionSpy() {
     const sections = [...document.querySelectorAll("[data-section]")];
-    if (!sections.length || !("IntersectionObserver" in window))
+    if (!sections.length)
         return noop;
     const links = [...document.querySelectorAll("[data-nav] a[href^='#']")];
-    const io = new IntersectionObserver((entries) => {
-        for (const e of entries) {
-            if (!e.isIntersecting)
-                continue;
-            const id = e.target.dataset.section ?? "";
-            root().dataset.section = id;
-            links.forEach((a) => {
-                if (a.getAttribute("href") === `#${id}`)
-                    a.setAttribute("aria-current", "true");
-                else
-                    a.removeAttribute("aria-current");
-            });
+    const nav = document.querySelector(".nav");
+    let raf = 0;
+    const update = () => {
+        raf = 0;
+        const edge = (nav?.getBoundingClientRect().height ?? 76.8) + 1;
+        let current = sections[0];
+        for (const section of sections) {
+            if (section.getBoundingClientRect().top <= edge)
+                current = section;
         }
-    }, { rootMargin: "-45% 0px -54% 0px" });
-    sections.forEach((s) => io.observe(s));
-    return () => io.disconnect();
+        if (window.scrollY + window.innerHeight >= root().scrollHeight - 2)
+            current = sections[sections.length - 1];
+        const id = current.dataset.section ?? "";
+        root().dataset.section = id;
+        links.forEach((a) => {
+            if (a.getAttribute("href") === `#${id}`)
+                a.setAttribute("aria-current", "true");
+            else
+                a.removeAttribute("aria-current");
+        });
+    };
+    const request = () => { if (!raf) raf = requestAnimationFrame(update); };
+    const ro = new ResizeObserver(request);
+    ro.observe(document.body);
+    window.addEventListener("scroll", request, { passive: true });
+    window.addEventListener("resize", request);
+    update();
+    return () => {
+        cancelAnimationFrame(raf);
+        ro.disconnect();
+        window.removeEventListener("scroll", request);
+        window.removeEventListener("resize", request);
+    };
 }
 /** Keeps `[data-clock]` showing the local time in the given zone. */
 export function mountClock(timeZone) {
@@ -199,7 +221,7 @@ export function mountCursor(el) {
         document.documentElement.removeEventListener("pointerleave", leave);
     };
 }
-/** Scrolls the skills marquee on its own, and speeds it up or reverses it with the page scroll. */
+/** Keeps one direction: scrolling down speeds it up, scrolling up slows it down. */
 export function mountMarquee() {
     const tracks = [...document.querySelectorAll(".marquee .track")];
     if (!tracks.length || prefersReducedMotion())
@@ -216,7 +238,7 @@ export function mountMarquee() {
         const dy = window.scrollY - last;
         last = window.scrollY;
         vel += (clamp(dy, -60, 60) - vel) * 0.08;
-        x += 0.7 + vel * 0.55;
+        x += Math.max(0.18, 0.7 + vel * 0.55);
         if (!seen.size)
             return;
         tracks.forEach((t) => {
@@ -236,7 +258,7 @@ export function mountMagnetic() {
     if (!hasFinePointer() || prefersReducedMotion())
         return noop;
     const cleanups = [];
-    document.querySelectorAll(".btn").forEach((el) => {
+    document.querySelectorAll(".btn:not(.split .btn), .split").forEach((el) => {
         const move = (e) => {
             const r = el.getBoundingClientRect();
             el.style.transform = `translate3d(${(e.clientX - r.left - r.width / 2) * 0.18}px, ${(e.clientY - r.top - r.height / 2) * 0.3}px, 0)`;
