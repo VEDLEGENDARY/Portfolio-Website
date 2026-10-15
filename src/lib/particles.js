@@ -255,6 +255,8 @@ export class ParticleField {
         const weight = this.opts.weight ?? 800;
         const fit = this.opts.fit ?? 0.92;
         const maxBlock = this.opts.maxBlock ?? 0.7;
+        const insets = this.opts.insets?.(w, h) ?? { top: 0, bottom: 0 };
+        const availableHeight = Math.max(1, h - insets.top - insets.bottom);
         const c = document.createElement("canvas");
         c.width = Math.round(w);
         c.height = Math.round(h);
@@ -269,15 +271,15 @@ export class ParticleField {
         const probe = ctx.measureText(lines[0]);
         const capRatio = (probe.actualBoundingBoxAscent || base * 0.72) / base;
         const block = (lines.length - 1) * size * lineGap + size * capRatio;
-        if (block > maxBlock * h)
-            size *= (maxBlock * h) / block;
+        if (block > maxBlock * availableHeight)
+            size *= (maxBlock * availableHeight) / block;
         ctx.font = `${weight} ${size}px ${family}`;
         ctx.textAlign = "center";
         ctx.textBaseline = "alphabetic";
         ctx.fillStyle = "#000";
         const cap = size * capRatio;
         const total = (lines.length - 1) * size * lineGap + cap;
-        const firstBase = (h - total) / 2 + cap;
+        const firstBase = insets.top + (availableHeight - total) / 2 + cap;
         lines.forEach((l, i) => ctx.fillText(l, w / 2, firstBase + i * size * lineGap));
         const step = 2;
         const data = ctx.getImageData(0, 0, c.width, c.height).data;

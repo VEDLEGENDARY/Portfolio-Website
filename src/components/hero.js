@@ -1,6 +1,6 @@
 "use client";
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useEffect, useRef } from "react";
+import { Arrow } from "./icons.js";
 import { ParticleField } from "../lib/particles.js";
 import { clamp, easeInOutCubic, parseColor, watchVisibility } from "../lib/motion.js";
 import { localPoint } from "../lib/ui.js";
@@ -28,7 +28,11 @@ export default function Hero({ name, lead, main }) {
                 family,
                 weight: 400,
                 fit: 0.88,
-                maxBlock: 0.56,
+                maxBlock: 0.92,
+                insets: () => ({
+                    top: sec.querySelector(".hero-top").offsetHeight + 18,
+                    bottom: sec.querySelector(".hero-foot").offsetHeight + 26,
+                }),
                 ink,
                 signal,
                 focus: 92,
@@ -83,5 +87,16 @@ export default function Hero({ name, lead, main }) {
             field?.dispose();
         };
     }, [name]);
-    return (_jsxs("section", { ref: section, id: "top", className: "hero", "data-section": "top", "aria-labelledby": "hero-title", children: [_jsx("div", { className: "hero-stage", children: _jsx("canvas", { ref: canvas, "aria-hidden": "true" }) }), _jsx("h1", { ref: title, id: "hero-title", className: "hero-title", children: name }), _jsx("div", { className: "hero-foot", children: _jsxs("p", { className: "hero-lead", children: [lead, " ", _jsx("span", { children: main })] }) })] }));
+    return (
+        <section ref={section} id="top" className="hero" data-section="top" aria-labelledby="hero-title">
+            <div className="hero-stage"><canvas ref={canvas} aria-hidden="true" /></div>
+            <div className="hero-top mono"><span><span className="small-cross" aria-hidden="true">+</span>Selected work / 2026</span><span>Computer science · UT Dallas</span></div>
+            <h1 ref={title} id="hero-title" className="hero-title">{name}</h1>
+            <div className="hero-foot">
+                <p className="hero-lead">{lead}<span>{main}</span></p>
+                <a href="#work" className="hero-explore" aria-label="Explore selected work"><span className="round-arrow"><Arrow direction="down" /></span><span>Explore the work<span className="mono">01 / Selected projects</span></span></a>
+                <p className="hero-edition mono"><span>Web / AI / Robotics</span>A portfolio in progress</p>
+            </div>
+        </section>
+    );
 }
