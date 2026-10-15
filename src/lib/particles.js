@@ -46,6 +46,7 @@ export class ParticleField {
         this.dpr = 1;
         this.n = 0;
         this.pos = new Float32Array(0);
+        this.base = new Float32Array(0);
         this.vel = new Float32Array(0);
         this.home = new Float32Array(0);
         this.dir = new Float32Array(0);
@@ -199,6 +200,8 @@ export class ParticleField {
         const ch = this.canvas.clientHeight;
         if (cw < 8 || ch < 8)
             return;
+        if (!first && cw === this.w && ch === this.h && this.dpr === Math.min(window.devicePixelRatio || 1, this.opts.dprCap ?? 2))
+            return;
         const { w, h, dpr } = fitCanvas(this.canvas, this.opts.dprCap ?? 2);
         this.w = w;
         this.h = h;
@@ -207,6 +210,7 @@ export class ParticleField {
         if (init) {
             this.n = this.opts.count ?? this.autoCount(w, h);
             this.pos = new Float32Array(this.n * 2);
+            this.base = new Float32Array(this.n * 2);
             this.vel = new Float32Array(this.n * 2);
             this.home = new Float32Array(this.n * 2);
             this.dir = new Float32Array(this.n * 2);
@@ -235,6 +239,11 @@ export class ParticleField {
         this.assignHomes();
         if (init)
             this.scatter();
+        else {
+            this.base.set(this.home);
+            this.pos.set(this.home);
+            this.vel.fill(0);
+        }
         if (this.reduce)
             this.settle();
     }
@@ -307,21 +316,26 @@ export class ParticleField {
             this.vel[i * 2] = 0;
             this.vel[i * 2 + 1] = 0;
         }
+        this.base.set(this.pos);
     }
     settle() {
         this.pos.set(this.home);
+        this.base.set(this.home);
+        this.vel.fill(0);
         this.draw();
         this.opts.onReadout?.({ n: this.n, sigma: 0, settled: true });
     }
     step(dt) {
-        const { pos, vel, home, dir, n, ptr: p } = this;
+        const { pos, base, vel, home, dir, n, ptr: p } = this;
         const k = dt * 60;
         const conv = easeOutCubic((this.time - 0.1) / 2.4);
         const disp = this.disperse;
         const spring = (0.01 + 0.075 * conv) * (1 - 0.55 * disp);
         const damp = Math.pow(0.84, k);
         const reach = Math.min(this.w, this.h) * 0.6 * Math.pow(disp, 1.2);
-        const jitter = 0.28 + (1 - conv) * 1.2;
+        // The text itself converges without inertia. Pointer impulses retain their
+        // own spring so hover, dragging and click waves still feel responsive.
+        const converge = 1 - Math.exp(-(1.4 + 6 * conv) * dt);
         const focus = this.opts.focus ?? 96;
         const R = focus * 1.15;
         const R2 = R * R;
@@ -355,8 +369,12 @@ export class ParticleField {
             const hy = home[iy];
             const tx = hx + dir[ix] * reach;
             const ty = hy + dir[iy] * reach;
-            let ax = (tx - x) * spring;
-            let ay = (ty - y) * spring;
+            const ox = x - base[ix];
+            const oy = y - base[iy];
+            base[ix] += (tx - base[ix]) * converge;
+            base[iy] += (ty - base[iy]) * converge;
+            let ax = -ox * spring;
+            let ay = -oy * spring;
             if (p.active) {
                 const dx = x - p.sx;
                 const dy = y - p.sy;
@@ -373,8 +391,8 @@ export class ParticleField {
             const vy = (vel[iy] + ay * k) * damp;
             vel[ix] = vx;
             vel[iy] = vy;
-            pos[ix] = x + vx * k + (Math.random() - 0.5) * jitter;
-            pos[iy] = y + vy * k + (Math.random() - 0.5) * jitter;
+            pos[ix] = base[ix] + ox + vx * k;
+            pos[iy] = base[iy] + oy + vy * k;
             const ex = hx - x;
             const ey = hy - y;
             err += ex * ex + ey * ey;

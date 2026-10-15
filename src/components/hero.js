@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { ParticleField } from "../lib/particles.js";
 import { clamp, easeInOutCubic, parseColor, watchVisibility } from "../lib/motion.js";
 import { localPoint } from "../lib/ui.js";
-export default function Hero({ name, lead, main, status }) {
+export default function Hero({ name, lead, main }) {
     const section = useRef(null);
     const title = useRef(null);
     const canvas = useRef(null);
@@ -83,5 +83,5 @@ export default function Hero({ name, lead, main, status }) {
             field?.dispose();
         };
     }, [name]);
-    return (_jsxs("section", { ref: section, id: "top", className: "hero", "data-section": "top", "aria-labelledby": "hero-title", children: [_jsx("div", { className: "hero-stage", children: _jsx("canvas", { ref: canvas, "aria-hidden": "true" }) }), _jsx("h1", { ref: title, id: "hero-title", className: "hero-title", children: name }), _jsxs("div", { className: "hero-foot", children: [_jsxs("p", { className: "hero-lead", children: [lead, " ", _jsx("span", { children: main })] }), _jsxs("p", { className: "mono hero-status", children: [_jsx("i", { "aria-hidden": "true" }), status] })] })] }));
+    return (_jsxs("section", { ref: section, id: "top", className: "hero", "data-section": "top", "aria-labelledby": "hero-title", children: [_jsx("div", { className: "hero-stage", children: _jsx("canvas", { ref: canvas, "aria-hidden": "true" }) }), _jsx("h1", { ref: title, id: "hero-title", className: "hero-title", children: name }), _jsx("div", { className: "hero-foot", children: _jsxs("p", { className: "hero-lead", children: [lead, " ", _jsx("span", { children: main })] }) })] }));
 }
