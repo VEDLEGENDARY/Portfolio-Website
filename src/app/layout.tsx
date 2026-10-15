@@ -1,25 +1,24 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Instrument_Sans } from "next/font/google";
+import { Instrument_Serif, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const display = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-display", axes: ["opsz"] });
-const body = Instrument_Sans({ subsets: ["latin"], variable: "--font-body" });
+const serif = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], variable: "--font-serif" });
+const sans = Geist({ subsets: ["latin"], variable: "--font-sans" });
+const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
   title: "Ved Patel | Full-stack developer",
   description: "Portfolio of Ved Patel: web products, AI tooling, and robotics software.",
-  openGraph: {
-    title: "Ved Patel | Full-stack developer",
-    description: "Web products, AI tooling, and robotics software.",
-    type: "website",
-  },
+  openGraph: { title: "Ved Patel | Full-stack developer", description: "Web products, AI tooling, and robotics software.", type: "website" },
 };
-
-export const viewport: Viewport = { themeColor: "#e9eef5" };
+export const viewport: Viewport = { themeColor: "#ffffff" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable}`}>
+    <html lang="en" className={`${serif.variable} ${sans.variable} ${mono.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: 'document.documentElement.classList.add("js")' }} />
+      </head>
       <body>{children}</body>
     </html>
   );
