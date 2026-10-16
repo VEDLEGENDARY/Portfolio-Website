@@ -221,36 +221,49 @@ export function mountCursor(el) {
         document.documentElement.removeEventListener("pointerleave", leave);
     };
 }
-/** Keeps one direction: scrolling down speeds it up, scrolling up slows it down. */
+/** Moves the ribbon at a constant speed, independent of scrolling and frame rate. */
 export function mountMarquee() {
     const tracks = [...document.querySelectorAll(".marquee .track")];
     if (!tracks.length || prefersReducedMotion())
         return noop;
     let x = 0;
-    let last = window.scrollY;
-    let vel = 0;
+    let lastTime = 0;
     let raf = 0;
+    const speed = 50.4;
+    const widths = new Map();
     const seen = new Set();
-    const io = new IntersectionObserver((es) => es.forEach((e) => (e.isIntersecting ? seen.add(e.target) : seen.delete(e.target))));
-    tracks.forEach((t) => io.observe(t));
-    const loop = () => {
-        raf = requestAnimationFrame(loop);
-        const dy = window.scrollY - last;
-        last = window.scrollY;
-        vel += (clamp(dy, -60, 60) - vel) * 0.08;
-        x += Math.max(0.18, 0.7 + vel * 0.55);
-        if (!seen.size)
-            return;
+    const loop = (now) => {
+        const dt = lastTime ? Math.min((now - lastTime) / 1000, 0.05) : 0;
+        lastTime = now;
+        x += speed * dt;
         tracks.forEach((t) => {
-            const half = t.scrollWidth / 2;
-            const o = ((x % half) + half) % half;
-            t.style.transform = `translate3d(${-o}px, 0, 0)`;
+            const half = widths.get(t);
+            if (half)
+                t.style.transform = `translate3d(${-x % half}px, 0, 0)`;
         });
+        raf = requestAnimationFrame(loop);
     };
-    loop();
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => e.isIntersecting ? seen.add(e.target) : seen.delete(e.target));
+        if (seen.size && !raf) {
+            lastTime = 0;
+            raf = requestAnimationFrame(loop);
+        }
+        else if (!seen.size) {
+            cancelAnimationFrame(raf);
+            raf = 0;
+        }
+    });
+    const ro = new ResizeObserver(() => tracks.forEach((t) => widths.set(t, t.scrollWidth / 2)));
+    tracks.forEach((t) => {
+        widths.set(t, t.scrollWidth / 2);
+        io.observe(t);
+        ro.observe(t);
+    });
     return () => {
         cancelAnimationFrame(raf);
         io.disconnect();
+        ro.disconnect();
     };
 }
 /** Buttons lean slightly toward the pointer. */

@@ -87,7 +87,7 @@ export default function Home() {
                 <div>
                   <dt>Certificates</dt>
                   <dd>{education.certs.map((certificate) => (
-                    <span className="certificate" key={certificate}>{certificate}<span className="certificate-mark" aria-hidden="true">✓</span></span>
+                    <span className="certificate" key={certificate}>{certificate}</span>
                   ))}</dd>
                 </div>
                 <div><dt>Based in</dt><dd>{profile.location}</dd></div>
@@ -95,8 +95,7 @@ export default function Home() {
             </div>
           </div>
           <div className="recognition">
-            <h3 data-reveal>Recognition</h3>
-            <ul className="awards">
+            <ul className="awards" aria-label="Awards and achievements">
               {highlights.map((highlight) => (
                 <li key={highlight.title} data-reveal><strong>{highlight.title}</strong><span>{highlight.detail}</span></li>
               ))}
@@ -152,7 +151,6 @@ export default function Home() {
           </div>
           <footer className="foot">
             <a className="footer-brand" href="#top" aria-label="Ved Patel, back to top"><BrandMark /><span>Ved Patel</span></a>
-            <p className="mono">{profile.location}<span data-clock /></p>
             <a className="back-top mono" href="#top">Back to top <Arrow /></a>
           </footer>
         </section>

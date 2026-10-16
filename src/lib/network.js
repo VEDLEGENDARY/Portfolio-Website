@@ -186,8 +186,8 @@ export class Network {
         const follow = 1 - Math.exp(-8 * dt);
         for (let i = 0; i < this.nodes.length; i++) {
             const node = this.nodes[i];
-            let dx = this.reduce ? 0 : Math.sin(this.time * 0.7 + i * 2.4) * 0.9;
-            let dy = this.reduce ? 0 : Math.cos(this.time * 0.6 + i * 1.7) * 0.75;
+            let dx = this.reduce ? 0 : Math.sin(this.time * 1.65 + i * 2.4) * 2.8;
+            let dy = this.reduce ? 0 : Math.cos(this.time * 1.45 + i * 1.7) * 2.3;
             if (i === this.hover && this.ptr.active && !this.reduce && Math.hypot(this.ptr.x - node.ax, this.ptr.y - node.ay) < 64) {
                 dx = clamp((this.ptr.x - node.ax) * 0.22, -6, 6);
                 dy = clamp((this.ptr.y - node.ay) * 0.22, -6, 6);
