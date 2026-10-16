@@ -3,7 +3,6 @@ import { useEffect, useRef } from "react";
 import { Arrow } from "./icons.js";
 import { ParticleField } from "../lib/particles.js";
 import { clamp, easeInOutCubic, parseColor, watchVisibility } from "../lib/motion.js";
-import { localPoint } from "../lib/ui.js";
 export default function Hero({ name, lead, main }) {
     const section = useRef(null);
     const title = useRef(null);
@@ -50,14 +49,37 @@ export default function Hero({ name, lead, main }) {
             }
             sec.classList.add("has-gl");
             field.start();
-            const move = (e) => {
-                const p = localPoint(cv, e);
-                field?.setPointer(p.x, p.y);
+            let lastPointer = null;
+            const syncPointer = () => {
+                if (!lastPointer)
+                    return null;
+                const rect = cv.getBoundingClientRect();
+                const x = lastPointer.clientX - rect.left;
+                const y = lastPointer.clientY - rect.top;
+                if (x < 0 || x >= rect.width || y < 0 || y >= rect.height) {
+                    field?.setPointer(null);
+                    return null;
+                }
+                field?.setPointer(x, y);
+                return { x, y };
             };
-            const leave = () => field?.setPointer(null);
+            const rememberPointer = (e) => {
+                if (e.pointerType === "touch")
+                    return null;
+                lastPointer = { clientX: e.clientX, clientY: e.clientY };
+                return syncPointer();
+            };
+            const move = (e) => { rememberPointer(e); };
+            const leave = (e) => {
+                if (e.pointerType === "touch")
+                    return;
+                lastPointer = null;
+                field?.setPointer(null);
+            };
             const down = (e) => {
-                const p = localPoint(cv, e);
-                field?.pulse(p.x, p.y);
+                const p = rememberPointer(e);
+                if (p)
+                    field?.pulse(p.x, p.y);
             };
             sec.addEventListener("pointermove", move);
             sec.addEventListener("pointerleave", leave);
@@ -74,10 +96,15 @@ export default function Hero({ name, lead, main }) {
                 const p = clamp(window.scrollY / (sec.offsetHeight * 0.75));
                 field?.setDisperse(easeInOutCubic(p));
                 sec.style.setProperty("--hp", p.toFixed(3));
+                syncPointer();
             };
             onScroll();
             window.addEventListener("scroll", onScroll, { passive: true });
-            cleanups.push(() => window.removeEventListener("scroll", onScroll));
+            window.addEventListener("resize", onScroll);
+            cleanups.push(() => {
+                window.removeEventListener("scroll", onScroll);
+                window.removeEventListener("resize", onScroll);
+            });
         };
         // The text is sampled from the real font, so wait for it (but never for long).
         const fontReady = document.fonts
