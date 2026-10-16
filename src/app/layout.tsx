@@ -8,9 +8,9 @@ const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
   title: "Ved Patel | Portfolio",
-  description: "Portfolio of Ved Patel: web products, AI tooling, and robotics software.",
+  description: "Portfolio of Ved Patel: retrieval systems, AI applications, and robotics software. Computer science student at UT Dallas.",
   applicationName: "Ved Patel Portfolio",
-  openGraph: { title: "Ved Patel | Portfolio", description: "Web products, AI tooling, and robotics software.", type: "website" },
+  openGraph: { title: "Ved Patel | Portfolio", description: "Retrieval systems, AI applications, and robotics software.", type: "website" },
 };
 export const viewport: Viewport = { themeColor: "#eeebe3" };
 

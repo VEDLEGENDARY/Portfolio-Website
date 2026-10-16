@@ -1,12 +1,12 @@
 import { clamp, mulberry32, prefersReducedMotion } from "./motion.js";
 const norm = (s) => s.toLowerCase().replace(/[^a-z0-9+#.]/g, "");
-/** Projects and skill groups are hubs; every technology links to the hubs that use it. */
-export function buildGraph({ projects, groups }) {
+/** Projects, experience, and skill groups are hubs for the technologies they use. */
+export function buildGraph({ projects, groups, experience = [] }) {
     const nodes = [];
     const links = [];
     const techs = new Map();
     const add = (id, label, kind) => {
-        nodes.push({ id, label, kind, x: 0, y: 0, vx: 0, vy: 0, r: kind === "group" ? 9 : kind === "project" ? 6.5 : 3, deg: 0 });
+        nodes.push({ id, label, kind, x: 0, y: 0, vx: 0, vy: 0, r: kind === "group" ? 9 : kind === "tech" ? 3 : 6.5, deg: 0 });
         return nodes.length - 1;
     };
     const tech = (name) => {
@@ -22,6 +22,10 @@ export function buildGraph({ projects, groups }) {
     projects.forEach((p) => {
         const pi = add(`p:${p.name}`, p.name, "project");
         p.stack.forEach((it) => links.push([pi, tech(it)]));
+    });
+    experience.forEach((entry) => {
+        const ei = add(`e:${entry.name}`, entry.name, "experience");
+        entry.stack.forEach((it) => links.push([ei, tech(it)]));
     });
     links.forEach(([a, b]) => {
         nodes[a].deg++;
@@ -273,11 +277,11 @@ export class Network {
             ctx.globalAlpha = on ? 1 : 0.14;
             ctx.beginPath();
             ctx.arc(n.x, n.y, n.r + (i === hover ? 2 : 0), 0, Math.PI * 2);
-            if (n.kind === "group") {
+            if (n.kind === "group" || n.kind === "experience") {
                 ctx.fillStyle = c.ink;
                 ctx.fill();
                 ctx.lineWidth = 1.5;
-                ctx.strokeStyle = c.paper;
+                ctx.strokeStyle = n.kind === "experience" ? c.signal : c.paper;
                 ctx.stroke();
             }
             else {
@@ -289,14 +293,14 @@ export class Network {
         const labelKey = `${hover}:${this.w}:${this.h}`;
         if (this.labelKey !== labelKey) {
             this.labels = [];
-            const priority = (i) => i === hover ? 0 : active && near(i) ? 1 : nodes[i].kind === "group" ? 2 : nodes[i].kind === "project" ? 3 : 4;
+            const priority = (i) => i === hover ? 0 : active && near(i) ? 1 : nodes[i].kind === "group" ? 2 : nodes[i].kind !== "tech" ? 3 : 4;
             const order = nodes.map((_, i) => i).sort((a, b) => priority(a) - priority(b));
             for (const i of order) {
                 const node = nodes[i];
                 const on = near(i);
                 if (compact && node.kind === "tech" && !(active && on))
                     continue;
-                const size = node.kind === "group" ? (compact ? 16 : 21) : node.kind === "project" ? (compact ? 15 : 19) : 12;
+                const size = node.kind === "group" ? (compact ? 16 : 21) : node.kind !== "tech" ? (compact ? 15 : 19) : 12;
                 ctx.font = `${node.kind === "group" ? "italic " : ""}${size}px ${node.kind === "tech" ? c.mono : c.serif}`;
                 const width = ctx.measureText(node.label).width + 10;
                 const height = size * 1.25 + 6;
@@ -341,7 +345,7 @@ export class Network {
             ctx.globalAlpha = on ? (node.kind === "tech" && !active ? 0.66 : 1) : 0.12;
             ctx.fillStyle = c.ink;
             ctx.fillRect(box.x, box.y, box.w, box.h);
-            ctx.fillStyle = node.kind === "project" || i === hover ? c.signal : c.paper;
+            ctx.fillStyle = node.kind === "project" || node.kind === "experience" || i === hover ? c.signal : c.paper;
             ctx.textBaseline = "middle";
             ctx.textAlign = "left";
             ctx.fillText(node.label, box.x + 5, box.y + box.h / 2);

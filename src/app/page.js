@@ -8,7 +8,7 @@ import ResumeButton from "../components/resume-button.js";
 import StackNetwork from "../components/stack-network.js";
 import ContactField from "../components/contact-field.js";
 import { Arrow, BrandMark } from "../components/icons.js";
-import { profile, statement, stats, highlights, projects, experience, skillGroups, education } from "../content/data.js";
+import { profile, statement, stats, projects, experience, skillGroups, education } from "../content/data.js";
 
 function Words({ text }) {
   return text.split(" ").map((word, index) => <span className="w" key={index}>{word}{" "}</span>);
@@ -41,7 +41,7 @@ export default function Home() {
           <a href="#experience">Experience</a>
           <a href="#contact">Contact</a>
         </nav>
-        <p className="nav-clock mono"><span>{profile.location}</span>{" "}<span data-clock /></p>
+        <p className="nav-clock mono"><span data-clock /></p>
       </header>
 
       <main>
@@ -82,39 +82,28 @@ export default function Home() {
             <div className="about-body">
               <dl className="facts" data-reveal>
                 <div><dt>Education</dt><dd>{education.school}<span className="fact-secondary">{education.degree}</span></dd></div>
-                <div><dt>Minors</dt><dd>{education.minors.join(" · ")}</dd></div>
+                <div><dt>Minor</dt><dd>{education.minor}</dd></div>
                 <div><dt>Coursework</dt><dd>{education.coursework.join(" · ")}</dd></div>
-                <div>
-                  <dt>Certificates</dt>
-                  <dd>{education.certs.map((certificate) => (
-                    <span className="certificate" key={certificate}>{certificate}</span>
-                  ))}</dd>
-                </div>
-                <div><dt>Based in</dt><dd>{profile.location}</dd></div>
               </dl>
             </div>
-          </div>
-          <div className="recognition">
-            <ul className="awards" aria-label="Awards and achievements">
-              {highlights.map((highlight) => (
-                <li key={highlight.title} data-reveal><strong>{highlight.title}</strong><span>{highlight.detail}</span></li>
-              ))}
-            </ul>
           </div>
         </section>
 
         <Marquee items={skillGroups.flatMap((group) => group.items)} />
 
         <section id="stack" className="stack dark sheet" data-section="stack" aria-labelledby="stack-title">
-          <Head id="stack-title" index="03" title={<>What I build <em>with</em></>} aside="Every dot is a technology. Hover one to trace the projects and skill areas it connects to." />
-          <StackNetwork projects={projects.map((project) => ({ name: project.name, stack: project.stack }))} groups={skillGroups.map((group) => ({ name: group.name, items: group.items }))} />
+          <Head id="stack-title" index="03" title={<>What I build <em>with</em></>} aside="Hover a node to trace the tools shared across my projects, experience, and skill areas." />
+          <StackNetwork projects={projects.map((project) => ({ name: project.name, stack: project.stack }))} experience={experience.map((entry) => ({ name: entry.graphName, stack: entry.stack }))} groups={skillGroups.map((group) => ({ name: group.name, items: group.items }))} />
           <ul className="network-key mono" aria-label="Network legend">
             <li><i className="key-project" aria-hidden="true" />Project</li>
+            <li><i className="key-experience" aria-hidden="true" />Experience</li>
             <li><i className="key-group" aria-hidden="true" />Skill area</li>
             <li><i className="key-tech" aria-hidden="true" />Technology</li>
           </ul>
           <ul className="sr-only">
             {skillGroups.map((group) => <li key={group.name}>{group.name}: {group.items.join(", ")}. Used in {group.used}.</li>)}
+            {projects.map((project) => <li key={project.slug}>{project.name}: {project.stack.join(", ")}.</li>)}
+            {experience.map((entry) => <li key={entry.org}>{entry.org}: {entry.stack.join(", ")}.</li>)}
           </ul>
         </section>
 
@@ -141,11 +130,11 @@ export default function Home() {
             <h2 id="contact-title" data-reveal>Let&apos;s build<br /><em>something.</em></h2>
             <Arrow className="contact-arrow" />
           </div>
-          <p className="contact-lead" data-reveal>Have a project in mind? I reply within a few days.</p>
           <div className="contact-bottom" data-reveal>
             <a className="contact-email" href={`mailto:${profile.email}`}>{profile.email}<Arrow /></a>
             <div className="actions">
               <a className="btn" href={profile.github} target="_blank" rel="noopener noreferrer">GitHub <Arrow /></a>
+              <a className="btn" href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <Arrow /></a>
               <ResumeButton href={profile.resume} />
             </div>
           </div>

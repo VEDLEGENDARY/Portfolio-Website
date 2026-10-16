@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { Network } from "../lib/network.js";
 import { watchVisibility } from "../lib/motion.js";
 import { localPoint } from "../lib/ui.js";
-export default function StackNetwork({ projects, groups }) {
+export default function StackNetwork({ projects, experience, groups }) {
     const canvas = useRef(null);
     useEffect(() => {
         const cv = canvas.current;
@@ -13,7 +13,7 @@ export default function StackNetwork({ projects, groups }) {
             if (visible && !net) {
                 const css = getComputedStyle(cv);
                 const read = (n, d) => css.getPropertyValue(n).trim() || d;
-                net = new Network(cv, { projects, groups }, {
+                net = new Network(cv, { projects, experience, groups }, {
                     ink: read("--ink", "#0f0f0e"),
                     paper: read("--paper", "#e6e3d9"),
                     signal: read("--signal", "#ff4a1c"),
@@ -47,10 +47,10 @@ export default function StackNetwork({ projects, groups }) {
             cv.removeEventListener("pointercancel", leave);
             net?.dispose();
         };
-    }, [projects, groups]);
+    }, [projects, experience, groups]);
     return (
         <div className="network">
-            <canvas ref={canvas} role="img" aria-label="Network linking each project and skill area to the technologies it uses" />
+            <canvas ref={canvas} role="img" aria-label="Network linking projects, experience, and skill areas to their technologies" />
         </div>
     );
 }

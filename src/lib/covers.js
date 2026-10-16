@@ -206,7 +206,78 @@ function lora(ctx, w, h, rnd) {
     const ax = bx + 2 * cell + 112;
     grid(ax, h / 2 - cell, n, 2, SIGNAL, false);
 }
-const DRAW = { rag, rope, lora };
+/** Candidate placements above a Tetris board, with the chosen landing in signal. */
+function tetris(ctx, w, h) {
+    const cell = 38;
+    const left = (w - cell * 10) / 2;
+    const top = 90;
+    const block = (x, y, color) => {
+        ctx.fillStyle = color;
+        roundRect(ctx, left + x * cell + 3, top + y * cell + 3, cell - 6, cell - 6, 4);
+        ctx.fill();
+    };
+    ctx.strokeStyle = rgba(INK, 0.12);
+    ctx.lineWidth = 1;
+    for (let x = 0; x <= 10; x++)
+        line(ctx, [left + x * cell, top], [left + x * cell, top + cell * 16]);
+    for (let y = 0; y <= 16; y++)
+        line(ctx, [left, top + y * cell], [left + cell * 10, top + y * cell]);
+    const heights = [4, 3, 5, 2, 2, 3, 4, 3, 2, 4];
+    heights.forEach((height, x) => {
+        for (let y = 16 - height; y < 16; y++)
+            block(x, y, rgba(INK, 0.72 + ((x + y) % 3) * 0.1));
+    });
+    const piece = [[0, 0], [1, 0], [2, 0], [1, 1]];
+    piece.forEach(([x, y]) => block(x + 3, y + 2, SIGNAL));
+    piece.forEach(([x, y]) => block(x + 3, y + 12, rgba(SIGNAL, 0.35)));
+    ctx.strokeStyle = SIGNAL;
+    ctx.lineWidth = 2;
+    ctx.setLineDash([5, 8]);
+    line(ctx, [left + 4.5 * cell, top + 4.5 * cell], [left + 4.5 * cell, top + 11.5 * cell]);
+    ctx.setLineDash([]);
+    // Alternatives are intentionally outside the board, keeping the diagram legible.
+    [left - 150, left + 10 * cell + 95].forEach((x) => {
+        ctx.strokeStyle = rgba(INK, 0.25);
+        piece.forEach(([px, py]) => {
+            roundRect(ctx, x + px * 24, h / 2 + py * 24, 19, 19, 3);
+            ctx.stroke();
+        });
+    });
+}
+
+/** Campus paths and event pins; a conceptual map rather than a product screenshot. */
+function campus(ctx) {
+    const paths = [
+        [[70, 210], [360, 210], [620, 400], [1120, 400]],
+        [[180, 80], [180, 570], [480, 690], [1080, 690]],
+        [[820, 90], [820, 610], [1120, 610]],
+        [[70, 500], [520, 500], [680, 170], [1120, 170]],
+    ];
+    ctx.lineWidth = 22;
+    ctx.lineJoin = "round";
+    ctx.strokeStyle = PAPER_LIGHT;
+    paths.forEach((points) => {
+        ctx.beginPath();
+        points.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y));
+        ctx.stroke();
+    });
+    const buildings = [[245, 285, 170, 110], [470, 130, 100, 100], [630, 540, 120, 95], [880, 245, 170, 90], [900, 455, 110, 95], [290, 555, 115, 65]];
+    buildings.forEach(([x, y, width, height], i) => {
+        roundRect(ctx, x, y, width, height, 8);
+        ctx.fillStyle = rgba(INK, i === 0 ? 0.85 : 0.12);
+        ctx.fill();
+        ctx.strokeStyle = rgba(INK, 0.35);
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+    });
+    [[330, 265], [700, 520], [970, 225]].forEach(([x, y], i) => {
+        dot(ctx, x, y, i === 0 ? 36 : 26, rgba(SIGNAL, 0.14));
+        dot(ctx, x, y, i === 0 ? 17 : 12, SIGNAL);
+        dot(ctx, x, y, 4, PAPER_LIGHT);
+    });
+}
+
+const DRAW = { rag, rope, lora, tetris, campus };
 export function drawCover(kind, w = 1200, h = 800) {
     const canvas = document.createElement("canvas");
     canvas.width = w;
